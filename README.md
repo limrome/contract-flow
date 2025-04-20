@@ -1,1 +1,2 @@
-# Конструктор анкет
+# contract-flow
+ContractFlow is a web app for fast and convenient contract creation and approval. Users fill out forms, generate drafts via smart templates, and track contract statuses. Built-in analytics and export to PDF/DOCX included.
