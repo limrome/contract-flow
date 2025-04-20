@@ -1,0 +1,73 @@
+stages:
+  - pull
+  - build
+  - copy
+  # - notify
+
+pull_master:
+  stage: pull
+  script:
+    - ssh devadmin@127.0.0.1 "cd ~/atipsfrontend && git pull"
+  only:
+    - main
+  tags:
+    - prod
+
+build_master:
+  stage: build
+  script:
+    - ssh devadmin@127.0.0.1 "cd ~/atipsfrontend && npm ci && npm run build"
+  only:
+    - main
+  tags:
+    - prod
+
+copy_master:
+  stage: copy
+  script:
+    - ssh devadmin@127.0.0.1 "sudo rm -r /var/www/atips/* && sudo mv ./atipsfrontend/dist/* /var/www/atips/ && sudo cp ./.htaccess /var/www/atips/.htaccess"
+    # - sh .ci-notify.sh ✅
+  only:
+    - main
+  tags:
+    - prod
+
+pull_develop:
+  stage: pull
+  script:
+    - ssh devadmin@127.0.0.1 "cd ~/atipsfrontend && git pull"
+  only:
+    - dev
+  tags:
+    - shell
+
+build_develop:
+  stage: build
+  script:
+    - ssh devadmin@127.0.0.1 "cd ~/atipsfrontend && npm ci && npm run build"
+  only:
+    - dev
+  tags:
+    - shell
+
+copy_develop:
+  stage: copy
+  script:
+    - ssh devadmin@127.0.0.1 "sudo rm -r /var/www/atips/* && sudo cp -r ./atipsfrontend/dist/* /var/www/atips/ && sudo cp ./.htaccess /var/www/atips/.htaccess"
+    # - sh .ci-notify.sh ✅
+  only:
+    - dev
+  tags:
+    - shell
+
+# notify_error:
+#   stage: notify
+#   script:
+#   - sh .ci-notify.sh ❌
+#   when: on_failure #deploy fail
+#   only:
+#     - main
+#     - dev
+#   tags:
+#     - shell
+#     - prod

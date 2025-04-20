@@ -1,0 +1,133 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Montserrat";
+    font-style: normal;
+}
+
+:root {
+    --color-dark-grey: #264054;
+    --color-grey: #687d8d;
+    --color-grey-50: rgba(104, 125, 141, 0.5);
+    --color-primary: #004ccc;
+    --color-white: #ffffff;
+}
+
+.h6 {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 120%;
+    display: flex;
+    align-items: center;
+    color: #264054;
+}
+.h5 {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 120%;
+    display: flex;
+    align-items: center;
+    color: #264054;
+}
+.h4 {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 120%;
+    display: flex;
+    align-items: center;
+    color: #264054;
+}
+.h3 {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 120%;
+    display: flex;
+    align-items: center;
+    color: #264054;
+}
+
+.sub3 {
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 130%;
+}
+
+.sub2 {
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 130%;
+}
+
+.sub1 {
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 130%;
+}
+
+.sub3 {
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 130%;
+}
+
+@keyframes loaderAnimation {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.App {
+    min-width: 100vw;
+    min-height: 100vh;
+}
+.main-loader-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: calc(240px);
+    width: 100%;
+    width: calc(100vw - 240px);
+    height: 100vh;
+    box-sizing: border-box;
+    background: transparent;
+    border-radius: 16px;
+    &.passive {
+        display: none;
+    }
+    .main-loader-img {
+        position: relative;
+        display: block;
+        width: 50px;
+        height: 50px;
+        &::after {
+            background-size: 50px 50px;
+            content: "";
+            display: block;
+            height: 50px;
+            pointer-events: none;
+            width: 50px;
+            animation: loaderAnimation 1s linear infinite;
+            background: url("/public/images/icons/loader.svg") no-repeat;
+            background-size: contain;
+        }
+    }
+}

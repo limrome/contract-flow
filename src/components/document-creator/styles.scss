@@ -1,0 +1,351 @@
+.document-creator-container {
+	display: flex;
+	height: 100%;
+	overflow-y: scroll;
+	scrollbar-width: none;
+
+
+
+	.sidebar {
+		width: 33%;
+		height: 100vh;
+		border-right: 1px solid #ccc;
+		overflow-y: scroll;
+		position: sticky;
+		top: 0;
+		padding: 14px 20px;
+		background-color: #ffffff;
+		font-size: 14px;
+		box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+		color: #1d2d2c;
+		scrollbar-width: none;
+		.span {
+			font-size: 14px;
+			color: #1d2d2c
+		}
+	
+		.label {
+			display: flex;
+			flex-direction: column;
+			gap: 8px;
+	
+			.checkbox {
+				display: flex;
+				align-items: center;
+				cursor: pointer;
+				font-size: 14px;
+				position: relative;
+				margin-bottom: 6px;
+	
+				.checkmark {
+					width: 14px;
+					height: 14px;
+					border: 2px solid #ccc;
+					border-radius: 4px;
+					margin-right: 6px;
+					transition: 0.2s;
+				}
+			}
+	
+			.new-string {
+				width: 100%;
+				height: 2px;
+				background-color: #eee;
+				margin: 8px 0;
+			}
+		}
+	
+		.dropdown-container,
+		.dropdown-container-sides,
+		.dropdown-container-fiz,
+		.dropdown-container-passport,
+		.dropdown-container-obligations,
+		.dropdown-container-items,
+		.dropdown-container-itemlist {
+			display: flex;
+			flex-direction: column;
+			width: 100%;
+			margin-bottom: 8px;
+		}
+	
+		.dropdown-button,
+		.dropdown-button-item {
+			background: none;
+			padding: 5px 10px;
+			cursor: pointer;
+			text-align: left;
+			display: flex;
+			justify-content: space-between;
+			width: 100%;
+			border: none;
+			font-size: 14px;
+			color: #333;
+			font-weight: 500;
+			position: relative;
+	
+			&::after {
+				content: "➤";
+				transition: transform 0.3s ease;
+			}
+	
+			&.rotated::after {
+				transform: rotate(90deg);
+			}
+		}
+	
+		.formContainer {
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+			width: 100%;
+			padding: 10px;
+			background: #e8efef;
+			border-radius: 10px;
+	
+			input[type="text"],
+			input[type="date"],
+			input[type="number"],
+			select {
+				background: #f4f4f8;
+				border: 1px solid #e0e0e0;
+				border-radius: 8px;
+				color: #212121;
+				font-size: 14px;
+				height: 40px;
+				padding: 0 10px;
+				width: 100%;
+	
+				&::placeholder {
+					color: #94a0b1;
+				}
+			}
+	
+			.input_text {
+				width: 100%;
+			}
+	
+			input[type="checkbox"],
+			input[type="radio"] {
+				appearance: none;
+				width: 14px;
+				height: 14px;
+				border: 2px solid #ccc;
+				border-radius: 50%;
+				position: relative;
+				cursor: pointer;
+				background: #eceded;
+				transition: all 0.2s ease;
+	
+				&:checked {
+					border-color: #255963;
+				}
+	
+				&:checked::before {
+					content: "";
+					position: absolute;
+					top: 3px;
+					left: 3px;
+					width: 8px;
+					height: 8px;
+					background-color: #255963;
+					border-radius: 50%;
+				}
+			}
+	
+			.radioGroup {
+				display: flex;
+				flex-direction: column;
+				gap: 6px;
+			}
+	
+			.label {
+				color: #252626;
+				font-size: 14px;
+	
+				span {
+					font-weight: 600;
+					display: block;
+					margin-bottom: 4px;
+				}
+			}
+		}
+
+		.formContainer1 {
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+			width: 100%;
+			padding: 4px;
+			background: #e8efef;
+			border-radius: 10px;
+	
+			input[type="text"],
+			input[type="date"],
+			input[type="number"],
+			select {
+				background: #f4f4f8;
+				border: 1px solid #e0e0e0;
+				border-radius: 8px;
+				color: #212121;
+				font-size: 14px;
+				height: 40px;
+				padding: 0 10px;
+				width: 100%;
+	
+				&::placeholder {
+					color: #94a0b1;
+				}
+			}
+	
+			.input_text {
+				width: 100%;
+			}
+	
+			input[type="checkbox"],
+			input[type="radio"] {
+				appearance: none;
+				width: 14px;
+				height: 14px;
+				border: 2px solid #ccc;
+				border-radius: 50%;
+				position: relative;
+				cursor: pointer;
+				background: #eceded;
+				transition: all 0.2s ease;
+	
+				&:checked {
+					border-color: #255963;
+				}
+	
+				&:checked::before {
+					content: "";
+					position: absolute;
+					top: 3px;
+					left: 3px;
+					width: 8px;
+					height: 8px;
+					background-color: #255963;
+					border-radius: 50%;
+				}
+			}
+	
+			.radioGroup {
+				display: flex;
+				flex-direction: column;
+				gap: 6px;
+			}
+	
+			.label {
+				color: #252626;
+				font-size: 14px;
+	
+				span {
+					font-weight: 600;
+					display: block;
+					margin-bottom: 4px;
+				}
+			}
+		}
+		
+	
+		.checkbox-list {
+			display: flex;
+			flex-direction: column;
+			padding: 6px;
+			margin-top: 4px;
+			gap: 4px;
+		}
+	
+		.add-button,
+		.remove-button {
+			background: none;
+			width: 100%;
+			border: none;
+			color: #334c48;
+			cursor: pointer;
+			padding: 6px 0;
+			font-size: 14px;
+	
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+	}
+	
+
+
+	.content {
+		width: 67%;
+
+		height: 100%;
+
+		.paper {
+			width: 595pt;
+			min-height: 841.9pt;
+			padding: 56.7pt 63.7pt 56.7pt 85.05pt;
+			background-color: white;
+
+
+			margin: 0.5rem auto;
+
+			span {
+				height: 16px;
+				display: block;
+			}
+
+			p {
+				height: 20px;
+				text-indent: 0.25in;
+				display: block;
+			}
+			.obligation {
+				text-indent: 0.5in;
+				display: block;
+				height: 20px;
+			}
+			table {
+				border-collapse: collapse;
+				border: 2px solid black;
+				width: 100%;
+
+				// text-align: justify;
+			}
+
+			.content-container-table {
+				display: flex;
+				flex-direction: column;
+				width: 100%;
+				margin-bottom: 20px; // Чтобы текст не наезжал на таблицу
+			}
+
+			th,
+			td {
+				border: 2px solid black !important;
+				text-align: center;
+			}
+
+			h2 {
+				height: 20px;
+			}
+
+			* {
+				text-align: justify;
+				font-family: "Times New Roman", "serif";
+				color: black;
+				font-size: 11pt;
+				font-style: normal;
+				font-weight: normal;
+				margin: 0;
+				padding: 0;
+				word-wrap: break-word;
+				line-height: 1.2;
+
+				&.header-title {
+					height: 20px;
+					font-weight: 600;
+					text-align: center;
+				}
+			}
+		}
+	}
+}

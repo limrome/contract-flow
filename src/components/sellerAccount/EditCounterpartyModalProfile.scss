@@ -1,0 +1,131 @@
+/* Контейнер модального окна */
+.modal-backdrop-edit-profile {
+	position: fixed;
+	inset: 0;
+	background-color: rgba(0, 0, 0, 0.45);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 1000;
+	backdrop-filter: blur(3px);
+}
+
+/* Стили для модального окна */
+.modal-edit {
+	background-color: #fff;
+	border-radius: 12px;
+	width: 100%;
+	max-width: 720px;
+	padding: 2.5rem;
+	position: relative;
+	box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+	max-height: 90vh;
+	// overflow-y: auto;
+	font-family: "Segoe UI", sans-serif;
+	z-index: 2; /* Обеспечиваем, что модальное окно поверх всего */
+}
+
+/* Закрыть окно */
+.modal__close-edit {
+	position: absolute;
+	top: 1.2rem;
+	right: 1.2rem;
+	font-size: 1.6rem;
+	background: none;
+	border: none;
+	cursor: pointer;
+	color: #999;
+	transition: color 0.2s ease;
+}
+
+.modal__close-edit:hover {
+	color: #000;
+}
+
+/* Стили заголовка модального окна */
+.modal__title-edit {
+	font-size: 1.2rem;
+	font-weight: 600;
+	text-align: center;
+	margin-bottom: 2rem;
+	color: #2c3e50;
+	
+}
+
+/* Стили для формы */
+.modal__form-edit {
+	display: grid;
+	grid-template-columns: 1fr 1fr; /* Две колонки */
+	gap: 0.5rem; /* Пространство между колонками */
+	width: 100%;
+}
+
+/* Стили для каждого поля */
+.modal__field-edit {
+	display: flex;
+	flex-direction: column;
+	gap: 0.1rem; /* Пробел между меткой и инпутом */
+}
+
+.modal__field-edit label {
+	font-size: 0.9rem;
+	font-weight: 500;
+	// margin-bottom: 0.1rem;
+	color: #555;
+}
+
+/* Стили для инпутов */
+.modal__field-edit input {
+	padding: 0.5rem 0.1rem;
+	border: 1px solid #ddd;
+	border-radius: 8px;
+	font-size: 0.9rem;
+	color: #333;
+	background-color: #fff;
+	width: 100%; /* Занимаем всю ширину */
+	transition: background-color 0.2s ease, border 0.2s ease;
+	cursor: text;
+	z-index: 2; /* Обеспечиваем, что инпут поверх других элементов */
+	position: relative; /* Обеспечиваем правильное позиционирование */
+}
+
+/* Фокус на инпуте */
+.modal__field-edit input:focus {
+	background-color: #fff;
+	border: 1px solid #2a6263;
+	outline: none;
+}
+
+/* Стили для кнопок */
+.modal__buttons-edit {
+	margin-top: 2rem;
+	display: flex;
+	justify-content: flex-end;
+}
+
+.btn-edit {
+	padding: 0.6rem 0.5rem;
+	font-size: 0.95rem;
+	border-radius: 8px;
+	border: none;
+	cursor: pointer;
+	transition: background-color 0.2s ease;
+	font-weight: 800;
+	background-color: #c2d8d7;
+
+	
+}
+
+
+.btn--secondary {
+	// background-color: #eee;
+	background-color: #c2d8d7;
+
+	color: #333;
+}
+
+.btn-edit:hover {
+	// background-color: #ddd;
+	background-color: #c2d8d7;
+
+}

@@ -1,0 +1,229 @@
+.seller-container-main {
+	display: flex;
+	height: 100%;
+
+	// overflow-y: scroll;
+	h2 {
+		color: #264054;
+		font-family:'Times New Roman', Times, serif;
+
+	}
+
+	.navigation-seller {
+		width: 8%;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		font-size: 12px;
+		background-color: #f8f9fb;
+		// font-family: "Times New Roman", Times, serif;
+		color: #264054;
+		font-weight: 600;
+		cursor: pointer;
+		// font-size: 12px;
+
+		.span {
+			margin-bottom: 10px;
+			font-family:'Times New Roman', Times, serif;
+
+		}
+		.navigation__header {
+			display: flex;
+			justify-content: left;
+			align-items: center;
+			margin-left: 5px;
+		}
+
+		.icon-btn {
+			background: url("/public/images/icons/icon.png") no-repeat center / contain;
+			border: none;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			// padding: 10px;
+			height: 25px;
+			width: 30px;
+			cursor: pointer;
+			margin-top: 10px;
+			margin-bottom: 15px;
+			background-color: transparent;
+			mix-blend-mode: multiply;
+			font-weight: 1000;
+
+		}
+		.icon-btn-seller-acc {
+			background: url("/public/images/icons/icon-acc.png") no-repeat center / contain;
+			border: none;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			padding: 10px;
+			height: 20px;
+			width: 30px;
+			cursor: pointer;
+			margin-bottom: 15px;
+			color: #264054;
+			font-weight: 1000;
+
+		}
+	}
+	.sidebar-seller {
+		width: 14%;
+		height: 100%;
+		background-color:#c8d3d1;
+		font-size: 10px;
+		position: absolute;
+		margin-left: 8%;
+		top: 0;
+		font-family:'Times New Roman', Times, serif;
+
+		// font-size: 13px;
+		button {
+			background: none;
+			border: none;
+		}
+
+		.dropdown-button {
+			display: flex;
+			margin-top: 20px;
+			margin-bottom: 20px;
+			margin-left: 30px;
+			font-family: "Times New Roman", Times, serif;
+			font-weight: 600;
+			font-size: 13px;
+			color: #264054;
+			cursor: pointer;
+
+			&.active {
+				color: rgb(0, 0, 0);
+			}
+		}
+		.dropdown-button2 {
+			display: flex;
+			margin-top: 50px;
+			margin-bottom: 20px;
+			font-family: "Times New Roman", Times, serif;
+			font-weight: 500;
+
+			font-size: 12px;
+			color: #264054;
+			cursor: pointer;
+		}
+
+		.label {
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+			font-family:'Times New Roman', Times, serif;
+
+		}
+	}
+
+	.content-seller {
+		margin-left: 22%;
+		padding: 2rem;
+		width: 78%;
+		background-color: #f8f9fb;
+		height: 100%;
+		min-height: 100vh;
+		h2{
+			font-size: 20px;
+			font-family:'Times New Roman', Times, serif;
+		}
+		.icon-btn {
+			background: none;
+			border: none;
+			cursor: pointer;
+			padding: 4px;
+			margin-right: 6px;
+			transition: transform 0.2s;
+			color: #3a5b5c;
+
+			img {
+				display: inline-block;
+				vertical-align: middle;
+			}
+
+			&:hover {
+				transform: scale(1.1);
+			}
+		}
+		.content-container-table-main {
+			background: #ffffff;
+			padding: 2rem;
+			border-radius: 16px;
+			box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+			margin-top: 2rem;
+		}
+
+		.table-header {
+			color: #64748b;
+			font-size: 14px;
+			font-weight: 600;
+			border-bottom: 1px solid #e2e8f0;
+			padding-bottom: 0.75rem;
+			margin-bottom: 1rem;
+			font-family:'Times New Roman', Times, serif;
+
+		}
+
+		table {
+			width: 100%;
+			border-collapse: collapse;
+
+			tbody {
+				tr {
+					&:hover {
+						background-color: #f8f9fb;
+						cursor: pointer;
+					}
+				}
+			}
+
+			tr {
+				border-bottom: 1px solid #e2e8f0;
+
+				td {
+					padding: 1rem 0.75rem;
+					font-size: 12px;
+					color: #374151;
+					font-family:'Times New Roman', Times, serif;
+
+				}
+			}
+		}
+
+		input {
+			width: 100%;
+			margin-top: 2rem;
+			height: 50px;
+			padding: 0 1rem;
+			border: 1px solid #d1d5db;
+			border-radius: 10px;
+			font-size: 14px;
+			background: #ffffff;
+			color: #154646;
+			transition: border 0.2s, box-shadow 0.2s;
+			font-family:'Times New Roman', Times, serif;
+
+
+			&:focus {
+				border-color: #578685;
+				box-shadow: 0 0 0 3px rgba(96, 194, 198, 0.414);
+				outline: none;
+			}
+
+			&::placeholder {
+				color: #9ca3af;
+			}
+		}
+
+		.justify {
+			margin-top: 1.5rem;
+			margin-inline: 1.5rem;
+		}
+	}
+	&h2, button, input, label, .profile-title, span {
+		font-family:'Times New Roman', Times, serif;
+	}
+}
