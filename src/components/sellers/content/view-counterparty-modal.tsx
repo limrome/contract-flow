@@ -9,32 +9,32 @@ interface Props {
 
 const ViewCounterpartyModal: React.FC<Props> = ({ onClose, type, data }) => {
   const fields =
-    type === 'individual'
+    type === "individual"
       ? [
-          ['fullName', 'ФИО'],
-          ['birthDate', 'Дата рождения'],
-          ['passportNumber', 'Серия и номер паспорта'],
-          ['passportIssueDate', 'Дата выдачи'],
-          ['birthPlace', 'Место рождения'],
-          ['passportIssuer', 'Кем выдан'],
-          ['passportCode', 'Код подразделения'],
-          ['address', 'Адрес'],
-          ['inn', 'ИНН'],
-          ['phone', 'Телефон'],
-          ['email', 'Почта'],
+          ["full_name", "ФИО"],
+          ["birth_date", "Дата рождения"],
+          ["passport_number", "Серия и номер паспорта"],
+          ["issue_date", "Дата выдачи"],
+          ["birth_place", "Место рождения"],
+          ["issued_by", "Кем выдан"],
+          ["passport_code", "Код подразделения"],
+          ["address", "Адрес"],
+          ["inn", "ИНН"],
+          ["phone", "Телефон"],
+          ["email", "Почта"],
         ]
       : [
-          ['companyName', 'Наименование'],
-          ['directorName', 'ФИО гендиректора'],
-          ['legalAddress', 'Юридический адрес'],
-          ['bankName', 'Наименование банка'],
-          ['account', 'Расчетный счет'],
-          ['corpAccount', 'Корпоративный счет'],
-          ['innUr', 'ИНН'],
-          ['kpp', 'КПП'],
-          ['ogrn', 'ОГРН'],
-          ['phoneUr', 'Телефон'],
-          ['emailUr', 'Почта'],
+          ["full_name", "Наименование компании"],
+          ["director_name", "ФИО гендиректора"],
+          ["legal_address", "Юридический адрес"],
+          ["bank_name", "Банк"],
+          ["account", "Расчетный счёт"],
+          ["corp_account", "Корпоративный счёт"],
+          ["inn", "ИНН"],
+          ["kpp", "КПП"],
+          ["ogrn", "ОГРН"],
+          ["phone", "Телефон"],
+          ["email", "Почта"],
         ];
 
   return (

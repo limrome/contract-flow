@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { counterparties } from "../../sellers/content/sellers-content";
+import React, { useState, useEffect } from "react";
+import { fetchCounterparties } from "../../services/counterparty-service";
+// import { counterparties } from "../../sellers/content/sellers-content";
 
 // Контрагенты (замените на реальные данные из компонента SellersContent)
 // const counterparties = [
@@ -53,6 +54,12 @@ const DocumentApprovalModal: React.FC<DocumentApprovalModalProps> = ({
 	const [counterparty, setCounterparty] = useState("");
 	const [comment, setComment] = useState("");
 	const [showSuggestions, setShowSuggestions] = useState(false);
+
+	const [counterparties, setCounterparties] = useState([]);
+
+	useEffect(() => {
+		fetchCounterparties().then(setCounterparties).catch(console.error);
+	}, []);
 
 	const filteredCounterparties = counterparties.filter((c) => {
 		const name = c.data.companyName || c.data.fullName || "";
