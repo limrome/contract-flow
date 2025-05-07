@@ -2,8 +2,46 @@ import * as React from "react";
 import "./styles.scss";
 import { DocumentCreatorSidebar } from "./sidebar/sidebar";
 import { DocumentCreatorContent } from "./content/content";
+import { fetchCounterparties } from "../services/counterparty-service";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 export const DocumentCreator = () => {
+	const [counterparties, setCounterparties] = useState([]);
+	const [userState, setUserState] = React.useState(null);
+	const [currentAccountState, setCurrentAccountState] = useState(null);
+
+	useEffect(() => {
+		axios
+			.get("http://localhost:8000/api/user/")
+			.then((result) => {
+				setUserState(result.data);
+			})
+			.catch((err) => {
+				alert("Ошибка авторизации");
+			});
+	}, []);
+
+	useEffect(() => {
+		fetchCounterparties().then(setCounterparties).catch(console.error);
+	}, []);
+
+	useEffect(() => {
+		if (!counterparties || !userState) return;
+
+		const currentCounterparty = counterparties.find((c) => c.user === userState.user_id);
+		setCurrentAccountState(currentCounterparty);
+	}, [userState, counterparties]);
+
+	useEffect(() => {
+		if (userState) {
+			setMainFormData((prev) => ({
+				...prev,
+				user_id: userState.user_id, 
+			}));
+		}
+	}, [userState]);
+
 	const [mainFormData, setMainFormData] = React.useState({
 		isKp: false,
 		isDkp: true,
@@ -13,7 +51,7 @@ export const DocumentCreator = () => {
 		chooseFromList: false,
 		delivery: "products", // products, services, productsServices
 		sellerFizFio: "",
-
+		counterparty_id: "",
 		number: "",
 		gavenDate: "",
 		placeOfBirth: "",
@@ -31,23 +69,23 @@ export const DocumentCreator = () => {
 		numberOfPhone: "",
 		mail: "",
 		inn: "",
-		titleOfCompany: "",
-		nameOfGenDir: "",
+		titleOfCompany: "ЛПДС «Лазарево»",
+		nameOfGenDir: "Ахатова Раузида Харисовича",
 		currAccount: "",
 		nameOfBank: "",
 		corrAccount: "",
-		urInn: "",
-		kpp: "",
-		ogrn: "",
-		urNumberOfPhone: "",
-		urMail: "",
+		urInn: "4582468514",
+		kpp: "4155471251",
+		ogrn: "1027700049486",
+		urNumberOfPhone: "8(800)475-45-75",
+		urMail: "lazarevo@mail.ru",
 		buyerBirthDate: "",
 		numberOfPhoneBuyer: "",
 		mailBuyer: "",
 		innBuyer: "",
 		titleOfCompanyBuyer: "",
 		nameOfGenDirBuyer: "",
-		urAddress: "",
+		urAddress: "Кировская обл., Уржамский р-н, с.Лазарево",
 		urAddressBuyer: "",
 		nameOfBankBuyer: "",
 		currAccountBuyer: "",

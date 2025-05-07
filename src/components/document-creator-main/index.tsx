@@ -19,15 +19,16 @@ export const DocumentCreatorMain = () => {
 		documentTypeState: "allDocuments",
 	});
 
-
 	return (
-		<div className="document-creator-container-main">
-			<DocumentCreatorSidebar
-				mainFormDataDocument={mainFormData}
-				setMainFormDataDocument={setMainFormData}
-			/>
-			<DocumentCreatorMainContent mainFormData={mainFormData}  />
-			<DocumentCreatorNavigation mainFormData={mainFormData} setMainFormData={setMainFormData} />
+		<div>
+			<div className="document-creator-container-main">
+				<DocumentCreatorSidebar
+					mainFormDataDocument={mainFormData}
+					setMainFormDataDocument={setMainFormData}
+				/>
+				<DocumentCreatorMainContent mainFormData={mainFormData} />
+				<DocumentCreatorNavigation mainFormData={mainFormData} setMainFormData={setMainFormData} />
+			</div>
 		</div>
 	);
 };

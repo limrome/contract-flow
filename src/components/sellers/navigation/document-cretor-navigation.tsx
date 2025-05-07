@@ -1,7 +1,9 @@
 import * as React from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const DocumentCreatorNavigation = ({ mainFormData, setMainFormData }) => {
+	const navigate = useNavigate();
 	const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, checked } = e.target;
 		if (name === "btn-contract") setMainFormData({ ...mainFormData, isBtnContract: checked });
@@ -18,8 +20,10 @@ export const DocumentCreatorNavigation = ({ mainFormData, setMainFormData }) => 
 					className="icon-btn"
 					name="btn-contract"
 					checked={mainFormData.isBtnContract}
+					onClick={() => navigate("/")}
 					onChange={handleCheckboxChange}
-				/><span className="span">Документы</span>
+				/>
+				<span className="span">Документы</span>
 			</div>
 			<div className="navigation__header">
 				<input
@@ -28,9 +32,10 @@ export const DocumentCreatorNavigation = ({ mainFormData, setMainFormData }) => 
 					name="btn-seller"
 					checked={mainFormData.isBtnSeller}
 					onChange={handleCheckboxChange}
-				/><span className="span">Контрагенты</span>
+				/>
+				<span className="span">Контрагенты</span>
 			</div>
-			
+
 			<div className="navigation__header">
 				<input
 					type="button"
@@ -38,7 +43,8 @@ export const DocumentCreatorNavigation = ({ mainFormData, setMainFormData }) => 
 					name="btn-analytics"
 					checked={mainFormData.isBtnAnalytics}
 					onChange={handleCheckboxChange}
-				/><span className="span">Аналитика</span>
+				/>
+				<span className="span">Аналитика</span>
 			</div>
 		</div>
 	);

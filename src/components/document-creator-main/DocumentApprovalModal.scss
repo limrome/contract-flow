@@ -1,18 +1,16 @@
-/* Стили для модального окна */
-
 .modal-overlay {
 	position: fixed;
 	top: 0;
 	left: 0;
 	right: 0;
 	bottom: 0;
-	background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный черный фон */
+	background-color: rgba(0, 0, 0, 0.5);
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	z-index: 9999;
-	backdrop-filter: blur(5px); /* Эффект размытия фона */
-	-webkit-backdrop-filter: blur(10px); /* Поддержка для Safari */
+	backdrop-filter: blur(5px); 
+	-webkit-backdrop-filter: blur(10px); 
 	font-family: "Times New Roman", Times, serif;
 font-size: 12px;
   h3{
@@ -49,29 +47,29 @@ font-size: 12px;
 	}
 
 	.modal-content {
-		background-color: #ffffff; /* Белый фон для модального окна */
-		border-radius: 12px; /* Округлые углы, как у карточки */
-		padding: 10px 20px; /* Увеличенные отступы */
+		background-color: #ffffff; 
+		border-radius: 12px; 
+		padding: 10px 20px; 
 		width: 100%;
-		max-width: 500px; /* Максимальная ширина */
-		box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1); /* Плавная тень для эффекта приподнятой карточки */
-		transition: all 0.3s ease; /* Плавное появление */
+		max-width: 500px; 
+		box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1); 
+		transition: all 0.3s ease;
 	}
 
 	.modal-header {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		border-bottom: 2px solid #f1f1f1; /* Легкая граница снизу */
-		padding-bottom: 15px; /* Отступ снизу */
-		margin-bottom: 20px; /* Отступ от контента */
+		border-bottom: 2px solid #f1f1f1; 
+		padding-bottom: 15px;
+		margin-bottom: 20px; 
 	}
 
 	.modal-header h3 {
 		font-size: 1.6rem;
 		color: #333;
 		margin: 0;
-		font-weight: 600; /* Сделаем шрифт жирным */
+		font-weight: 600; 
 	}
 
 	.close-btn {
@@ -83,7 +81,7 @@ font-size: 12px;
 	}
 
 	.close-btn:hover {
-		color: #f44336; /* Красный цвет при наведении */
+		color: #f44336; 
 	}
 
 	.modal-body {
@@ -100,7 +98,7 @@ font-size: 12px;
 		color: #555;
 		display: block;
 		margin-bottom: 8px;
-		font-weight: 500; /* Немного жирнее, чтобы выделялись */
+		font-weight: 500; 
 	}
 
 

@@ -13,7 +13,8 @@ const ViewCounterpartyModal: React.FC<Props> = ({ onClose, type, data }) => {
       ? [
           ["full_name", "ФИО"],
           ["birth_date", "Дата рождения"],
-          ["passport_number", "Серия и номер паспорта"],
+          ["passport_series", "Серия паспорта"],
+          ["passport_number", "Номер паспорта"],
           ["issue_date", "Дата выдачи"],
           ["birth_place", "Место рождения"],
           ["issued_by", "Кем выдан"],

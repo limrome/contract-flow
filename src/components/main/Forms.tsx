@@ -12,6 +12,7 @@ import { DocumentCreator } from "../document-creator";
 import { DocumentCreatorMain } from "../document-creator-main";
 import { SellersForDocument } from "../sellers";
 import { Document } from "../sellers/document/document";
+import { FormLayout } from "./layout";
 
 const Wrapper = styled.div`
 	width: 100vw;
@@ -35,11 +36,13 @@ export const Forms = () => {
 				<Route path="*" element={<DocumentCreator />} />
 			</Routes> */}
 			<Routes>
-				<Route path="/creator" element={<DocumentCreator />} />
-				<Route path="/sellers" element={<SellersForDocument />} />
-				<Route path="/document/:id" element={<Document />} />
-				<Route path="*" element={<DocumentCreatorMain />} />
-				<Route path="/documents" element={<DocumentCreatorMain />} />
+				<Route element={<FormLayout />}>
+					<Route path="/creator" element={<DocumentCreator />} />
+					<Route path="/sellers" element={<SellersForDocument />} />
+					<Route path="/document/:id" element={<Document />} />
+					<Route path="/" element={<DocumentCreatorMain />} />
+					<Route path="/documents" element={<DocumentCreatorMain />} />
+				</Route>
 			</Routes>
 
 			{/* <Routes>

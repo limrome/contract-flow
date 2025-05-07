@@ -1,5 +1,6 @@
 .modal-backdrop {
     position: fixed;
+    padding-top: 50px;
     inset: 0;
     background-color: rgba(0, 0, 0, 0.45);
     display: flex;
@@ -7,6 +8,7 @@
     align-items: center;
     z-index: 1000;
     backdrop-filter: blur(3px);
+    // cursor: pointer;
   }
   
   .modal {
@@ -74,7 +76,7 @@
       font-size: 0.95rem;
       color: #333;
       background-color: #e8f2f1;
-      pointer-events: none;
+      // pointer-events: none;
     }
   }
   

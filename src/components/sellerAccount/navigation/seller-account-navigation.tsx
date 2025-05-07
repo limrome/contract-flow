@@ -6,7 +6,7 @@ export const SellerAccountNavigation = () => {
 
 	return (
 		<div className="navigation-account" >
-			<div className="navigation__header" onClick={() => navigate("/sellerdocuments", { replace: false })}>
+			<div className="navigation__header" onClick={() => navigate("/", { replace: false })}>
 				
 				<button className="icon-btn" />
 				<span className="span">Документы</span>

@@ -7,44 +7,8 @@ import ViewCounterpartyModal from "./view-counterparty-modal";
 import EditCounterpartyModal from "./edit-counterparty-modal";
 import ContractorSearch from "./contractor-search";
 import { fetchCounterparties } from "../../services/api";
-
-// export const counterparties = [
-// 	{
-// 		id: 1,
-// 		type: "company", // 👈 вот тут нужный тип
-// 		data: {
-// 			companyName: 'ООО "Гусь и рыба"',
-// 			directorName: "Иванов Иван Иванович",
-// 			legalAddress: "г. Москва, ул. Рыбная, д. 1",
-// 			bankName: "РыбБанк",
-// 			account: "123456789",
-// 			corpAccount: "987654321",
-// 			innUr: "8856454718",
-// 			kpp: "5465454646",
-// 			ogrn: "1027700132195",
-// 			phoneUr: "+7 (123) 456-78-90",
-// 			emailUr: "gusi@ya.ru",
-// 		},
-// 	},
-// 	{
-// 		id: 2,
-// 		type: "individual",
-// 		data: {
-// 			fullName: "Петров Павел Петрович",
-// 			birthDate: "1990-01-01",
-// 			passportNumber: "1234 567890",
-// 			passportIssueDate: "2010-01-01",
-// 			birthPlace: "г. Саратов",
-// 			passportIssuer: "УФМС России",
-// 			passportCode: "123-456",
-// 			address: "г. Саратов, ул. Лесная, д. 3",
-// 			inn: "9876543210",
-// 			phone: "+7 (999) 999-99-99",
-// 			email: "petrov@mail.ru",
-// 		},
-// 	},
-// ];
-
+import { FaTrash } from "react-icons/fa";
+import axios from "axios";
 export const SellersContent = ({ mainFormData }) => {
 	console.log(mainFormData);
 	const [isModalOpen, setIsModalOpen] = useState(false);
@@ -63,52 +27,85 @@ export const SellersContent = ({ mainFormData }) => {
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
 
-
-
-
 	useEffect(() => {
 		const loadData = async () => {
-		  try {
-			const data = await fetchCounterparties();
-			console.log("Ответ от сервера:", data); // Логируем ответ от сервера
-	
-			// Если данные пришли, сразу сохраняем их
-			if (Array.isArray(data)) {
-			  setCounterparties(data);
-			} else {
-			  setError("Получены некорректные данные");
+			try {
+				const data = await fetchCounterparties();
+				console.log("Ответ от сервера:", data); // Логируем ответ от сервера
+
+				// Если данные пришли, сразу сохраняем их
+				if (Array.isArray(data)) {
+					setCounterparties(data);
+				} else {
+					setError("Получены некорректные данные");
+				}
+			} catch (e) {
+				setError("Не удалось загрузить контрагентов");
+			} finally {
+				setLoading(false);
 			}
-		  } catch (e) {
-			setError("Не удалось загрузить контрагентов");
-		  } finally {
-			setLoading(false);
-		  }
 		};
 		loadData();
-	  }, []);
-	
-	  // Фильтрация контрагентов по поисковому запросу
-	  const filteredCounterparties =
+	}, []);
+
+	// Фильтрация контрагентов по поисковому запросу
+	const filteredCounterparties =
 		counterparties && Array.isArray(counterparties)
-		  ? counterparties.filter((counterparty) => {
-			  const query = searchQuery.toLowerCase();
-			  const matches = Object.values(counterparty).some((fieldValue) =>
-				String(fieldValue).toLowerCase().includes(query)
-			  );
-			  console.log("Фильтрация:", counterparty, "Результат фильтрации:", matches); // Логируем каждый контрагент и результат фильтрации
-			  return matches;
-			})
-		  : [];
-	
-	  console.log("Отфильтрованные контрагенты:", filteredCounterparties); // Логируем итоговую фильтрацию
-	
-	  const handleSave = (updatedData: any) => {
-		// Сохраняем обновленные данные контрагента
-		console.log(updatedData);
-	  };
+			? counterparties.filter((counterparty) => {
+					const query = searchQuery.toLowerCase();
+					const matches = Object.values(counterparty).some((fieldValue) =>
+						String(fieldValue).toLowerCase().includes(query)
+					);
+					console.log("Фильтрация:", counterparty, "Результат фильтрации:", matches); // Логируем каждый контрагент и результат фильтрации
+					return matches;
+			  })
+			: [];
+
+	console.log("Отфильтрованные контрагенты:", filteredCounterparties); // Логируем итоговую фильтрацию
 
 	const EyeIcon = FaEye as React.FC<{ size?: number }>;
 	const EditIcon = FaEdit as React.FC<{ size?: number }>;
+
+	const handleSaveCounterparty = async (updatedData: any) => {
+		try {
+			// Получаем обновленного контрагента из ответа сервера
+			const updatedCounterparty = updatedData;
+
+			// Обновляем список контрагентов в состоянии
+			setCounterparties((prevCounterparties) => {
+				return prevCounterparties.map(
+					(counterparty) =>
+						counterparty.counterparty_id === updatedCounterparty.counterparty_id
+							? updatedCounterparty // Обновляем данные этого контрагента
+							: counterparty // Остальные остаются без изменений
+				);
+			});
+
+			// Закрываем модальное окно
+			setEditModalOpen(false);
+
+			// Уведомление об успешном сохранении
+			// alert("Контрагент успешно обновлен!");
+		} catch (error) {
+			console.error("Ошибка сохранения контрагента:", error);
+			alert("Не удалось сохранить контрагента.");
+		}
+	};
+
+	const handleDeleteCounterparty = async (counterpartyId: number) => {
+		if (!window.confirm("Вы уверены, что хотите удалить контрагента?")) return;
+
+		try {
+			await axios.delete(`http://localhost:8000/api/counterparties/${counterpartyId}/`);
+			setCounterparties((prevCounterparties) =>
+				prevCounterparties.filter((counterparty) => counterparty.counterparty_id !== counterpartyId)
+			);
+			// alert("Контрагент успешно удален!");
+		} catch (error) {
+			console.error("Ошибка при удалении контрагента:", error);
+			alert("Не удалось удалить контрагента.");
+		}
+	};
 
 	return (
 		<>
@@ -121,7 +118,14 @@ export const SellersContent = ({ mainFormData }) => {
 								Добавить контрагента
 							</button>
 
-							{isModalOpen && <AddCounterpartyModal onClose={closeModal} />}
+							{isModalOpen && (
+								<AddCounterpartyModal
+									onClose={closeModal}
+									onAdd={(newCounterparty) => {
+										setCounterparties((prev) => [...prev, newCounterparty]); // добавляем нового контрагента в список
+									}}
+								/>
+							)}
 						</div>
 						<ContractorSearch
 							searchQuery={searchQuery}
@@ -132,8 +136,6 @@ export const SellersContent = ({ mainFormData }) => {
 					<p> </p>
 					<p> </p>
 					<div className="content-container-table-main">
-					
-
 						{loading ? (
 							<p>Загрузка...</p>
 						) : error ? (
@@ -149,7 +151,6 @@ export const SellersContent = ({ mainFormData }) => {
 										<td>Действия</td>
 									</tr>
 								</thead>
-								
 
 								<tbody>
 									{filteredCounterparties.length > 0 ? (
@@ -162,7 +163,9 @@ export const SellersContent = ({ mainFormData }) => {
 												</td>
 												<td>{counterparty.email}</td>
 												<td>{counterparty.inn}</td>
-												<td>{counterparty.counterparty_type === "company" ? counterparty.kpp : "-"}</td>
+												<td>
+													{counterparty.counterparty_type === "company" ? counterparty.kpp : "-"}
+												</td>
 												<td>
 													<button
 														className="icon-btn"
@@ -172,7 +175,7 @@ export const SellersContent = ({ mainFormData }) => {
 															setSelectedType(counterparty.counterparty_type);
 															setViewModalOpen(true);
 														}}>
-														<EyeIcon size={18} />
+														<EyeIcon size={15} />
 													</button>
 													<button
 														className="icon-btn"
@@ -182,7 +185,13 @@ export const SellersContent = ({ mainFormData }) => {
 															setSelectedType(counterparty.counterparty_type);
 															setEditModalOpen(true);
 														}}>
-														<EditIcon size={18} />
+														<EditIcon size={14} />
+													</button>
+													<button
+														className="icon-btn"
+														title="Удалить"
+														onClick={() => handleDeleteCounterparty(counterparty.counterparty_id)}>
+														<FaTrash size={12} />
 													</button>
 												</td>
 											</tr>
@@ -208,7 +217,7 @@ export const SellersContent = ({ mainFormData }) => {
 								onClose={() => setEditModalOpen(false)}
 								type={selectedType}
 								data={selectedData}
-								onSave={handleSave}
+								onSave={handleSaveCounterparty}
 							/>
 						)}
 					</div>

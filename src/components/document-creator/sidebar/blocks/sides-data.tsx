@@ -26,7 +26,7 @@ export const SidesData = ({ handleChange, mainFormData, setMainFormData }) => {
 	const [isOpenUrAddress, setIsOpenUrAddress] = useState(true);
 	const [isOpenUrAddressBuyer, setIsOpenUrAddressBuyer] = useState(true);
 
-	const [isOpenRekv, setIsOpenRekv] = useState(true);
+	const [isOpenRekv, setIsOpenRekv] = useState(false);
 	const [isOpenRekvBuyer, setIsOpenRekvBuyer] = useState(true);
 
 	const data = ["Устава", "Договора", "Контракта", "Соглашения", "Протокола", "Другое"];

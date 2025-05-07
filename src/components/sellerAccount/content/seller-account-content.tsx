@@ -7,30 +7,28 @@ import { useNavigate } from "react-router-dom";
 export interface EmployeeProfile {
 	id: number; // Уникальный идентификатор сотрудника
 	type: "individual" | "company"; // Тип сотрудника
-	data: {
-		fullName: string;
-		birthDate: string;
-		passportNumber: string;
-		passportIssueDate: string;
-		birthPlace: string;
-		passportIssuer: string;
-		passportCode: string;
-		address: string;
-		inn: string;
-		phone: string;
-		email: string;
-		companyName?: string; // Если это компания
-		directorName?: string;
-		legalAddress?: string;
-		bankName?: string;
-		account?: string;
-		corpAccount?: string;
-		innUr?: string;
-		kpp?: string;
-		ogrn?: string;
-		phoneUr?: string;
-		emailUr?: string;
-	};
+	fullName: string;
+	birthDate: string;
+	passportNumber: string;
+	passportIssueDate: string;
+	birthPlace: string;
+	passportIssuer: string;
+	passportCode: string;
+	address: string;
+	inn: string;
+	phone: string;
+	email: string;
+	companyName?: string; // Если это компания
+	directorName?: string;
+	legalAddress?: string;
+	bankName?: string;
+	account?: string;
+	corpAccount?: string;
+	innUr?: string;
+	kpp?: string;
+	ogrn?: string;
+	phoneUr?: string;
+	emailUr?: string;
 }
 
 export interface SellerAccountContentProps {
@@ -41,13 +39,13 @@ export const SellerAccountContent: React.FC<SellerAccountContentProps> = ({ empl
 	const navigate = useNavigate();
 
 	const handleLogout = () => {
-		localStorage.removeItem("authToken");
+		localStorage.removeItem("access");
 		navigate("/login");
 	};
 	// const { type, data } = mainFormData;
 
 	const [editModalOpen, setEditModalOpen] = useState(false);
-	const [selectedData, setSelectedData] = useState<any>(employeeData.data);
+	const [selectedData, setSelectedData] = useState<any>(employeeData);
 	const [selectedType, setSelectedType] = useState<"individual" | "company">(employeeData.type);
 	const [employeeId] = useState<number>(employeeData.id); // Идентификатор сотрудника
 
@@ -128,7 +126,7 @@ export const SellerAccountContent: React.FC<SellerAccountContentProps> = ({ empl
 					<>
 						<div className="profile-item">
 							<label>Компания:</label>
-							<input type="text" value={selectedData.companyName} readOnly />
+							<input type="text" value={selectedData.full_name} readOnly />
 						</div>
 						<div className="profile-item">
 							<label>Директор:</label>

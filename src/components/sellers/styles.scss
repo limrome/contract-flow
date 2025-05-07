@@ -1,29 +1,47 @@
+html{
+	min-height: 100vh;
+	min-width: 100vw;
+	// overflow-x: hidden;
+	scrollbar-width: none;
+
+}
+
 .sellers-container-doc {
 	display: flex;
 	height: 100%;
+	min-height: 100vh;
 	overflow-y: scroll;
 	scrollbar-width: none;
-	&h2, button, input, label, .profile-title, span {
-		font-family:'Times New Roman', Times, serif;
+	
+	&h2,
+	button,
+	input,
+	label,
+	.profile-title,
+	span {
+		font-family: "Times New Roman", Times, serif;
 	}
 
 	h2 {
 		color: #264054;
-		font-family:'Times New Roman', Times, serif;
+		font-family: "Times New Roman", Times, serif;
 		font-size: 20px;
 	}
 
 	.navigation {
+		// padding-top: 2px; // отступ, чтобы контент не прятался под шапкой
+		min-height: 100vh;
 		width: 8%;
 		height: 100%;
 		position: absolute;
-		top: 0;
+		// top: 0;
 		font-size: 12px;
 		background-color: #c8d3d1;
 		font-family: "Times New Roman", Times, serif;
 		color: #264054;
 		font-weight: 600;
 		cursor: pointer;
+		scrollbar-width: none;
 
 		.span {
 			margin-bottom: 10px;
@@ -81,6 +99,8 @@
 
 	.content {
 		width: 92%;
+		min-height: 100vh;
+		scrollbar-width: none;
 
 		height: 100%;
 		position: absolute;
@@ -114,7 +134,6 @@
 			justify-content: center;
 			z-index: 999;
 			animation: fadeIn 0.3s ease;
-
 		}
 
 		.modal {
@@ -167,11 +186,11 @@
 				cursor: pointer;
 				background: #eceded;
 				transition: all 0.2s ease;
-	
+
 				&:checked {
 					border-color: #255963;
 				}
-	
+
 				&:checked::before {
 					content: "";
 					position: absolute;
@@ -205,7 +224,6 @@
 				color: grey;
 				text-align: left;
 				margin-right: 10px;
-				
 			}
 			input[type="date"]:focus:before {
 				// content: none;
@@ -224,10 +242,7 @@
 				border-color: #606067;
 				outline: none;
 			}
-
 		}
-
-		
 
 		.modal__buttons {
 			display: flex;
@@ -242,7 +257,6 @@
 			font-size: 0.95rem;
 			cursor: pointer;
 			transition: background 0.2s;
-			
 
 			&--primary {
 				background: #395555;
@@ -284,7 +298,6 @@
 				opacity: 1;
 			}
 		}
-
 
 		button {
 			border-color: #7f9b95;
@@ -359,7 +372,6 @@
 			td {
 				height: 60px;
 				font-family: "Times New Roman", Times, serif;
-				
 			}
 		}
 		.justify {
@@ -367,7 +379,6 @@
 			margin-left: 20px;
 			margin-right: 20px;
 		}
-
 
 		.content-container-table-main {
 			background: #ffffff;
