@@ -20,8 +20,12 @@ export const DocumentCreatorContent = ({ mainFormData }) => {
 			0
 		);
 	};
+	function numberToWords(value: number): string {
+		if (value === undefined || value === null) {
+			console.error("Value is undefined or null");
+			return ""; // Верните пустую строку или какой-то дефолтный результат
+		}
 
-	const numberToWords = (num: number): string => {
 		const words = [
 			"",
 			"одного",
@@ -58,12 +62,11 @@ export const DocumentCreatorContent = ({ mainFormData }) => {
 			"девяноста",
 		];
 
-		if (num < 20) return words[num];
-		if (num < 100) return `${tens[Math.floor(num / 10)]} ${words[num % 10]}`.trim();
+		if (value < 20) return words[value];
+		if (value < 100) return `${tens[Math.floor(value / 10)]} ${words[value % 10]}`.trim();
 
-		return num.toString();
-	};
-
+		return value.toString();
+	}
 	const MyComponent = ({ number }: { number: number }) => (
 		<>
 			{number} ({numberToWords(number)})
@@ -136,11 +139,17 @@ export const DocumentCreatorContent = ({ mainFormData }) => {
 							</tbody>
 						</table>
 					</p>
-					
+
 					{/* Продавец и покупатель - Юридические лица */}
 					{mainFormData.isDkp && !mainFormData.isFizFaceState && !mainFormData.isBuyerFizFace && (
 						<>
-							<p style={{ height: "20px", textIndent: "0.25in", display: "block", marginTop: "60px" }}>
+							<p
+								style={{
+									height: "20px",
+									textIndent: "0.25in",
+									display: "block",
+									marginTop: "60px",
+								}}>
 								{mainFormData.titleOfCompany?.length
 									? mainFormData.titleOfCompany
 									: "______________________________________"}
@@ -249,7 +258,7 @@ export const DocumentCreatorContent = ({ mainFormData }) => {
 					{/* Продавец - юр.лицо, покупатель - физ.лицо */}
 					{mainFormData.isDkp && !mainFormData.isFizFaceState && mainFormData.isBuyerFizFace && (
 						<>
-							<p style={{ height: "20px", textIndent: "0.25in", display: "block"}}>
+							<p style={{ height: "20px", textIndent: "0.25in", display: "block" }}>
 								{mainFormData.titleOfCompany?.length
 									? mainFormData.titleOfCompany
 									: "______________________________________"}
@@ -283,7 +292,14 @@ export const DocumentCreatorContent = ({ mainFormData }) => {
 							</p>
 						</>
 					)}
-					<p style={{ height: "20px", textIndent: "0.25in", display: "block", marginBottom: "50px", marginTop: "50px" }}></p>
+					<p
+						style={{
+							height: "20px",
+							textIndent: "0.25in",
+							display: "block",
+							marginBottom: "50px",
+							marginTop: "50px",
+						}}></p>
 					<p
 						className="header-title"
 						style={{
@@ -295,10 +311,10 @@ export const DocumentCreatorContent = ({ mainFormData }) => {
 						}}>
 						1. Предмет договора
 					</p>
-					<p style={{ height: "20px", textIndent: "0.25in", display: "block" }}></p>
+					<p style={{ height: "15px", textIndent: "0.25in", display: "block" }}></p>
 					{mainFormData.isDkp && mainFormData.delivery === "products" && (
 						<>
-							<p style={{ height: "20px", textIndent: "0.25in", display: "block"}}>
+							<p style={{ textIndent: "0.25in", display: "block", marginBottom: "1px" }}>
 								1.1. По настоящему Договору Продавец обязуется передать товары в собственность
 								Покупателя: (далее по тексту - Товар) в количестве и ассортименте, указанных в п.
 								1.2 настоящего Договора, а Покупатель обязуется принять Товар и уплатить за него
@@ -308,7 +324,7 @@ export const DocumentCreatorContent = ({ mainFormData }) => {
 					)}
 					{mainFormData.isDkp && mainFormData.delivery === "services" && (
 						<>
-							<p style={{ height: "20px", textIndent: "0.25in", display: "block"}}>
+							<p style={{ textIndent: "0.25in", display: "block", marginBottom: "1px" }}>
 								1.1. По настоящему Договору Продавец обязуется оказать услуги Покупателю: (далее по
 								тексту - Товар) в количестве и ассортименте, указанных в п. 1.2 настоящего Договора,
 								а Покупатель обязуется принять Товар и уплатить за него цену в размере и в порядке,
@@ -318,7 +334,7 @@ export const DocumentCreatorContent = ({ mainFormData }) => {
 					)}
 					{mainFormData.isDkp && mainFormData.delivery === "productsServices" && (
 						<>
-							<p style={{ height: "20px", textIndent: "0.25in", display: "block"}}>
+							<p style={{ textIndent: "0.25in", display: "block", marginBottom: "1px" }}>
 								1.1. По настоящему Договору Продавец обязуется передать в собственность товары и
 								оказать услуги Покупателю: (далее по тексту - Товар) в количестве и ассортименте,
 								указанных в п. 1.2 настоящего Договора, а Покупатель обязуется принять Товар и
@@ -326,12 +342,9 @@ export const DocumentCreatorContent = ({ mainFormData }) => {
 							</p>
 						</>
 					)}
-					<p style={{ height: "20px", textIndent: "0.25in", display: "block",  marginTop: "30px" }}></p>
-					{/* <p style={{ height: "20px", textIndent: "0.25in", display: "block" }}></p>
-					<p style={{ height: "20px", textIndent: "0.25in", display: "block" }}></p> */}
 					{mainFormData.isDkp && (
 						<>
-							<p style={{ height: "20px", textIndent: "0.25in", display: "block" }}>
+							<p style={{ textIndent: "0.25in", display: "block", marginTop: "1px" }}>
 								1.2. Продавец передает Покупателю следующие Товары:
 							</p>
 

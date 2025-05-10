@@ -1,7 +1,6 @@
 html{
 	min-height: 100vh;
 	min-width: 100vw;
-	// overflow-x: hidden;
 	scrollbar-width: none;
 
 }
@@ -29,12 +28,10 @@ html{
 	}
 
 	.navigation {
-		// padding-top: 2px; // отступ, чтобы контент не прятался под шапкой
 		min-height: 100vh;
 		width: 8%;
 		height: 100%;
 		position: absolute;
-		// top: 0;
 		font-size: 12px;
 		background-color: #c8d3d1;
 		font-family: "Times New Roman", Times, serif;
@@ -224,9 +221,6 @@ html{
 				color: grey;
 				text-align: left;
 				margin-right: 10px;
-			}
-			input[type="date"]:focus:before {
-				// content: none;
 			}
 		}
 

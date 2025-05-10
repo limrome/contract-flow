@@ -5,8 +5,8 @@ import axios from "axios";
 interface EditCounterpartyModalProps {
 	onClose: () => void;
 	type: "individual" | "company";
-	data: any; // Тип данных контрагента
-	onSave: (updatedData: any) => void; // Функция сохранения изменений
+	data: any;
+	onSave: (updatedData: any) => void;
 }
 
 const EditCounterpartyModal: React.FC<EditCounterpartyModalProps> = ({
@@ -19,13 +19,12 @@ const EditCounterpartyModal: React.FC<EditCounterpartyModalProps> = ({
 	const [isSaving, setIsSaving] = useState(false);
 	const [error, setError] = useState("");
 
-
 	useEffect(() => {
-		setFormData(data); // Устанавливаем данные в состояние
+		setFormData(data);
 	}, [data]);
 
 	// Отладочная информация
-	console.log("Current formData:", formData); // Печатаем текущее состояние формы
+	console.log("Current formData:", formData);
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
@@ -36,37 +35,30 @@ const EditCounterpartyModal: React.FC<EditCounterpartyModalProps> = ({
 		}));
 	};
 
-
 	const handleSave = async () => {
 		const updatedData: any = {};
 
-		// Собираем данные
 		fields.forEach(({ field }) => {
 			updatedData[field] = formData[field] || null;
 		});
 
-		// Запрещаем сохранение при текущем процессе
 		setIsSaving(true);
 		setError("");
 
 		try {
-			const counterpartyId = formData.counterparty_id; // Получаем ID контрагента из formData
+			const counterpartyId = formData.counterparty_id;
 
 			if (!counterpartyId) {
 				throw new Error("Не удалось получить ID контрагента.");
 			}
 
-			// Отправка данных на сервер через axios
 			const response = await axios.put(
-				`http://localhost:8000/api/counterparties/${counterpartyId}/`, // Используем counterparty_id для запроса
+				`http://localhost:8000/api/counterparties/${counterpartyId}/`,
 				updatedData
 			);
-      
-			// После успешного ответа, вызываем функцию onSave, чтобы обновить состояние на фронте
-			onSave(response.data); // Обновленные данные с сервера
-			onClose(); // Закрываем модальное окно
 
-			// alert("Данные успешно сохранены!");
+			onSave(response.data);
+			onClose();
 		} catch (err) {
 			setError("Ошибка при сохранении данных.");
 			console.error("Error while saving:", err);
@@ -78,31 +70,66 @@ const EditCounterpartyModal: React.FC<EditCounterpartyModalProps> = ({
 	const fields =
 		type === "company"
 			? [
-					{ name: "companyName", label: "Наименование компании", field: "full_name" },
-					{ name: "directorName", label: "ФИО Генерального директора", field: "director_name" },
-					{ name: "legalAddress", label: "Юридический адрес", field: "legal_address" },
-					{ name: "bankName", label: "Наименование банка", field: "bank_name" },
-					{ name: "account", label: "Расчетный счет", field: "account" },
-					{ name: "corpAccount", label: "Корпоративный счет", field: "corp_account" },
-					{ name: "innUr", label: "ИНН", field: "inn" }, 
-					{ name: "kpp", label: "КПП", field: "kpp" },
-					{ name: "ogrn", label: "ОГРН", field: "ogrn" },
-					{ name: "phoneUr", label: "Номер телефона", field: "phone" },
-					{ name: "emailUr", label: "Почта", field: "email" },
+					{
+						name: "companyName",
+						label: "Наименование компании",
+						field: "full_name",
+						editable: true,
+					},
+					{
+						name: "directorName",
+						label: "ФИО Генерального директора",
+						field: "director_name",
+						editable: true,
+					},
+					{
+						name: "legalAddress",
+						label: "Юридический адрес",
+						field: "legal_address",
+						editable: true,
+					},
+					{ name: "bankName", label: "Наименование банка", field: "bank_name", editable: true },
+					{ name: "account", label: "Расчетный счет", field: "account", editable: true },
+					{
+						name: "corpAccount",
+						label: "Корпоративный счет",
+						field: "corp_account",
+						editable: true,
+					},
+					{ name: "innUr", label: "ИНН", field: "inn", editable: true },
+					{ name: "kpp", label: "КПП", field: "kpp", editable: true },
+					{ name: "ogrn", label: "ОГРН", field: "ogrn", editable: true },
+					{ name: "phoneUr", label: "Номер телефона", field: "phone", editable: true },
+					{ name: "emailUr", label: "Почта", field: "email", editable: true },
 			  ]
 			: [
-					{ name: "fullName", label: "ФИО", field: "full_name" },
-					{ name: "birthDate", label: "Дата рождения", field: "birth_date" },
-					{ name: "passportNumber", label: "Серия паспорта", field: "passport_series" },
-					{ name: "passportNumber", label: "Номер паспорта", field: "passport_number" },
-					{ name: "passportIssueDate", label: "Дата выдачи", field: "issue_date" },
-					{ name: "birthPlace", label: "Место рождения", field: "birth_place" },
-					{ name: "passportIssuer", label: "Кем выдан", field: "issued_by" },
-					{ name: "passportCode", label: "Код подразделения", field: "passport_code" },
-					{ name: "address", label: "Адрес", field: "address" },
-					{ name: "inn", label: "ИНН", field: "inn" },
-					{ name: "phone", label: "Номер телефона", field: "phone" },
-					{ name: "email", label: "Почта", field: "email" },
+					{ name: "fullName", label: "ФИО", field: "full_name", editable: true },
+					{ name: "birthDate", label: "Дата рождения", field: "birth_date", editable: true },
+					{
+						name: "passportNumber",
+						label: "Серия паспорта",
+						field: "passport_series",
+						editable: true,
+					},
+					{
+						name: "passportNumber",
+						label: "Номер паспорта",
+						field: "passport_number",
+						editable: true,
+					},
+					{ name: "passportIssueDate", label: "Дата выдачи", field: "issue_date", editable: true },
+					{ name: "birthPlace", label: "Место рождения", field: "birth_place", editable: true },
+					{ name: "passportIssuer", label: "Кем выдан", field: "issued_by", editable: true },
+					{
+						name: "passportCode",
+						label: "Код подразделения",
+						field: "passport_code",
+						editable: true,
+					},
+					{ name: "address", label: "Адрес", field: "address", editable: true },
+					{ name: "inn", label: "ИНН", field: "inn", editable: true },
+					{ name: "phone", label: "Номер телефона", field: "phone", editable: true },
+					{ name: "email", label: "Почта", field: "email", editable: true },
 			  ];
 
 	return (
@@ -121,7 +148,7 @@ const EditCounterpartyModal: React.FC<EditCounterpartyModalProps> = ({
 								name={field}
 								value={formData[field] || ""}
 								onChange={editable ? handleInputChange : undefined}
-								disabled={!editable} // Если поле не редактируется, делаем его недоступным
+								disabled={!editable}
 							/>
 						</div>
 					))}

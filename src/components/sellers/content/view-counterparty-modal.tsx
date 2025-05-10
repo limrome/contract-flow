@@ -39,7 +39,7 @@ const ViewCounterpartyModal: React.FC<Props> = ({ onClose, type, data }) => {
         ];
 
   return (
-    <div className="modal-backdrop">
+    <div className="modal-backdrop-f">
       <div className="modal">
         <button className="modal__close" onClick={onClose}>×</button>
         <h2 className="modal__title">Карточка контрагента</h2>
@@ -54,7 +54,7 @@ const ViewCounterpartyModal: React.FC<Props> = ({ onClose, type, data }) => {
         </div>
 
         <div className="modal__buttons">
-          <button className="btn btn--secondary" onClick={onClose}>
+          <button className="btn btn--close" onClick={onClose}>
             Закрыть
           </button>
         </div>

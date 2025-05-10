@@ -1,7 +1,6 @@
 import * as React from "react";
+import { useLocation } from "react-router-dom";
 import { Outlet } from "react-router-dom";
-// import {exportHTML} from "../document-creator/content"
-
 
 const exportHTML = () => {
 	var header =
@@ -22,16 +21,23 @@ const exportHTML = () => {
 };
 
 export const FormLayout = () => {
+	const location = useLocation();
+	console.log(location);
+	const isDocumentPage = location.pathname.match(/^\/document\/\d+$/);
+	const isCreatorPage = location.pathname === "/creator";
 	return (
 		<>
 			<header className="app-header">
-				<h1>Система по работе с договорами</h1>
-				<button className="btn-export" onClick={exportHTML}>Export</button>
+				<h2>Система по работе с договорами</h2>
+				{isCreatorPage || isDocumentPage ? (
+					<button className="btn-export" onClick={exportHTML}>
+						Export
+					</button>
+				) : null}
 			</header>
 			<div
 				style={{
 					paddingTop: "50px",
-                    
 				}}>
 				<Outlet />
 			</div>

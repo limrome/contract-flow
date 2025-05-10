@@ -1,80 +1,68 @@
 import React, { useState, useEffect } from "react";
-import { fetchCounterparties } from "../../services/counterparty-service";
-// import { counterparties } from "../../sellers/content/sellers-content";
-
-// Контрагенты (замените на реальные данные из компонента SellersContent)
-// const counterparties = [
-//   {
-//     id: 1,
-//     type: "company", // 👈 тип
-//     data: {
-//       companyName: 'ООО "Гусь и рыба"',
-//       directorName: "Иванов И.И.",
-//       legalAddress: "г. Москва, ул. Рыбная, д. 1",
-//       bankName: "РыбБанк",
-//       account: "123456789",
-//       corpAccount: "987654321",
-//       innUr: "8856454718",
-//       kpp: "5465454646",
-//       ogrn: "1027700132195",
-//       phoneUr: "+7 (123) 456-78-90",
-//       emailUr: "gusi@ya.ru",
-//     },
-//   },
-//   {
-//     id: 2,
-//     type: "individual", // 👈 тип
-//     data: {
-//       fullName: "Петров П.П.",
-//       birthDate: "1990-01-01",
-//       passportNumber: "1234 567890",
-//       passportIssueDate: "2010-01-01",
-//       birthPlace: "г. Саратов",
-//       passportIssuer: "УФМС России",
-//       passportCode: "123-456",
-//       address: "г. Саратов, ул. Лесная, д. 3",
-//       inn: "9876543210",
-//       phone: "+7 (999) 999-99-99",
-//       email: "petrov@mail.ru",
-//     },
-//   },
-// ];
+import axios from "axios";
 
 interface DocumentApprovalModalProps {
 	showModal: boolean;
 	onClose: () => void;
-	onSubmit: (counterparty: string, comment: string) => void;
+	documentId: string;
 }
 
 const DocumentApprovalModal: React.FC<DocumentApprovalModalProps> = ({
 	showModal,
 	onClose,
-	onSubmit,
+	documentId,
 }) => {
-	const [counterparty, setCounterparty] = useState("");
-	const [comment, setComment] = useState("");
-	const [showSuggestions, setShowSuggestions] = useState(false);
-
-	const [counterparties, setCounterparties] = useState([]);
+	const [counterparty, setCounterparty] = useState(""); // Для поиска контрагента по имени
+	const [counterpartyId, setCounterpartyId] = useState<string | null>(null); // Для хранения ID выбранного контрагента
+	const [comment, setComment] = useState(""); // Для комментария
+	const [showSuggestions, setShowSuggestions] = useState(false); // Для показа подсказок
+	const [counterparties, setCounterparties] = useState<any[]>([]); // Для хранения контрагентов
+	const [isLoading, setIsLoading] = useState(true); // Статус загрузки данных
+	const [isSubmitting, setIsSubmitting] = useState(false); // Статус отправки комментария
 
 	useEffect(() => {
-		fetchCounterparties().then(setCounterparties).catch(console.error);
+		fetch("http://localhost:8000/api/counterparties")
+			.then((res) => res.json())
+			.then((data) => {
+				console.log("Контрагенты:", data);
+				setCounterparties(data);
+			})
+			.catch((err) => console.error("Ошибка загрузки контрагентов", err));
 	}, []);
 
-	const filteredCounterparties = counterparties.filter((c) => {
-		const name = c.data.companyName || c.data.fullName || "";
-		return name.toLowerCase().includes(counterparty.toLowerCase());
-	});
-
-	const handleSelect = (name: string) => {
+	const filteredCounterparties = counterparties.filter((c) =>
+		(c.full_name || "").toLowerCase().includes(counterparty.toLowerCase())
+	);
+	const handleSelect = (id: string, name: string) => {
 		setCounterparty(name);
+		setCounterpartyId(id);
 		setShowSuggestions(false);
 	};
 
-	// Обработчик отправки данных
-	const handleSubmit = () => {
-		onSubmit(counterparty, comment); // Отправляем контрагента и комментарий
-		onClose(); // Закрываем модальное окно после отправки
+	const handleSubmit = async () => {
+		if (!counterpartyId || !comment) {
+			alert("Пожалуйста, выберите контрагента и введите комментарий.");
+			return;
+		}
+
+		try {
+			setIsSubmitting(true);
+			const response = await axios.post("http://localhost:8000/api/add_comment/", {
+				document_id: documentId,
+				counterparty_id: counterpartyId,
+				comment: comment,
+			});
+
+			if (response.status === 201) {
+				alert("Комментарий успешно добавлен!");
+				onClose();
+			}
+		} catch (error) {
+			console.error("Ошибка при отправке комментария:", error);
+			alert("Ошибка при отправке комментария.");
+		} finally {
+			setIsSubmitting(false);
+		}
 	};
 
 	if (!showModal) return null;
@@ -93,34 +81,28 @@ const DocumentApprovalModal: React.FC<DocumentApprovalModalProps> = ({
 						<label htmlFor="counterparty">Контрагент</label>
 						<input
 							type="text"
-							id="counterparty"
-							placeholder="Введите контрагента"
 							value={counterparty}
-							// onChange={(e) => setCounterparty(e.target.value)}
 							onChange={(e) => {
 								setCounterparty(e.target.value);
 								setShowSuggestions(true);
 							}}
 							onFocus={() => setShowSuggestions(true)}
-							onBlur={() => setTimeout(() => setShowSuggestions(false), 200)} // 👈 задержка, чтобы успеть кликнуть
 							autoComplete="off"
 						/>
-						{showSuggestions && filteredCounterparties.length > 0 && (
+						{showSuggestions && filteredCounterparties.length > 0 ? (
 							<ul className="suggestion-list">
 								{filteredCounterparties.map((c) => {
-									const name = c.data.companyName || c.data.fullName; // универсальное имя
 									return (
 										<li
-											key={c.id}
+											key={c.counterparty_id}
 											className="suggestion-item"
-											onMouseDown={() => handleSelect(name)} // 👈 именно onMouseDown, не onClick
-										>
-											{name}
+											onMouseDown={() => handleSelect(c.counterparty_id, c.full_name)}>
+											{c.full_name}
 										</li>
 									);
 								})}
 							</ul>
-						)}
+						) : null}
 					</div>
 					<div className="form-group">
 						<label htmlFor="comment">Комментарий</label>
@@ -136,8 +118,8 @@ const DocumentApprovalModal: React.FC<DocumentApprovalModalProps> = ({
 					<button className="btn-secondary" onClick={onClose}>
 						Закрыть
 					</button>
-					<button className="btn-primary" onClick={handleSubmit}>
-						Отправить
+					<button className="btn-primary" onClick={handleSubmit} disabled={isSubmitting}>
+						{isSubmitting ? "Отправка..." : "Отправить"}
 					</button>
 				</div>
 			</div>

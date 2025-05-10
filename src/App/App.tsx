@@ -41,16 +41,13 @@ const App = ({ mainLoader }: IAppProps) => {
 					<Route
 						exact
 						path="/login"
-						// path="/sign_in"
 						element={
 							<AuthGuard
 								user={localStorage.getItem("access") ? localStorage.getItem("access") : null}
 							/>
 						}>
 						<Route exact path="/login" element={<Auth />} />
-						{/* <Route exact path="/sign_in" element={<Auth />} /> */}
 					</Route>
-					{/* <Route exact path="/sign_up" element={<Register />} /> */}
 					<Route path="/register/user" element={<RegisterUser />} />
 					<Route path="/register/counterparty" element={<RegisterCounterparty />} />{" "}
 				</Routes>

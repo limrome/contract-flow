@@ -1,10 +1,8 @@
 import * as React from "react";
 import { Route, Routes } from "react-router-dom";
 import styled from "styled-components";
-import PostEdit from "../SellerArea/form-fill/PostEdit";
-import {SellerMainDocuments} from "../seller-main-documents";
-import {SellerAccount} from "../sellerAccount";
-
+import { SellerMainDocuments } from "../seller-main-documents";
+import { SellerAccount } from "../sellerAccount";
 
 const Wrapper = styled.div`
 	background: #e5e5e5;

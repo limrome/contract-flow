@@ -4,8 +4,8 @@ import { FaSave, FaTimes } from "react-icons/fa";
 interface EditCounterpartyModalProps {
 	onClose: () => void;
 	type: "individual" | "company";
-	data: any; // Тип данных контрагента (например, объект с данными)
-	onSave: (updatedData: any) => void; // Функция сохранения изменений
+	data: any; 
+	onSave: (updatedData: any) => void; 
 }
 
 const EditCounterpartyModalProfile: React.FC<EditCounterpartyModalProps> = ({
@@ -21,7 +21,7 @@ const EditCounterpartyModalProfile: React.FC<EditCounterpartyModalProps> = ({
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
-		console.log(`Changing ${name} to ${value}`); // Выводим в консоль имя поля и новое значение
+		console.log(`Changing ${name} to ${value}`); 
 		setFormData({
 			...formData,
 			[name]: value,
@@ -29,8 +29,8 @@ const EditCounterpartyModalProfile: React.FC<EditCounterpartyModalProps> = ({
 	};
 
 	const handleSave = () => {
-		onSave(formData); // Сохраняем измененные данные
-		onClose(); // Закрываем модалку после сохранения
+		onSave(formData); 
+		onClose(); 
 	};
 
 	return (

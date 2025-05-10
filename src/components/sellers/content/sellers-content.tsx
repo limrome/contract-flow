@@ -9,6 +9,7 @@ import ContractorSearch from "./contractor-search";
 import { fetchCounterparties } from "../../services/api";
 import { FaTrash } from "react-icons/fa";
 import axios from "axios";
+
 export const SellersContent = ({ mainFormData }) => {
 	console.log(mainFormData);
 	const [isModalOpen, setIsModalOpen] = useState(false);
@@ -20,7 +21,6 @@ export const SellersContent = ({ mainFormData }) => {
 	const [selectedType, setSelectedType] = useState<"individual" | "company">("company");
 
 	const [editModalOpen, setEditModalOpen] = useState(false);
-	// Состояние для поиска
 	const [searchQuery, setSearchQuery] = useState("");
 
 	const [counterparties, setCounterparties] = useState([]);
@@ -31,9 +31,8 @@ export const SellersContent = ({ mainFormData }) => {
 		const loadData = async () => {
 			try {
 				const data = await fetchCounterparties();
-				console.log("Ответ от сервера:", data); // Логируем ответ от сервера
+				console.log("Ответ от сервера:", data);
 
-				// Если данные пришли, сразу сохраняем их
 				if (Array.isArray(data)) {
 					setCounterparties(data);
 				} else {
@@ -48,7 +47,6 @@ export const SellersContent = ({ mainFormData }) => {
 		loadData();
 	}, []);
 
-	// Фильтрация контрагентов по поисковому запросу
 	const filteredCounterparties =
 		counterparties && Array.isArray(counterparties)
 			? counterparties.filter((counterparty) => {
@@ -56,36 +54,29 @@ export const SellersContent = ({ mainFormData }) => {
 					const matches = Object.values(counterparty).some((fieldValue) =>
 						String(fieldValue).toLowerCase().includes(query)
 					);
-					console.log("Фильтрация:", counterparty, "Результат фильтрации:", matches); // Логируем каждый контрагент и результат фильтрации
+					console.log("Фильтрация:", counterparty, "Результат фильтрации:", matches);
 					return matches;
 			  })
 			: [];
 
-	console.log("Отфильтрованные контрагенты:", filteredCounterparties); // Логируем итоговую фильтрацию
+	console.log("Отфильтрованные контрагенты:", filteredCounterparties);
 
 	const EyeIcon = FaEye as React.FC<{ size?: number }>;
 	const EditIcon = FaEdit as React.FC<{ size?: number }>;
 
 	const handleSaveCounterparty = async (updatedData: any) => {
 		try {
-			// Получаем обновленного контрагента из ответа сервера
 			const updatedCounterparty = updatedData;
 
-			// Обновляем список контрагентов в состоянии
 			setCounterparties((prevCounterparties) => {
-				return prevCounterparties.map(
-					(counterparty) =>
-						counterparty.counterparty_id === updatedCounterparty.counterparty_id
-							? updatedCounterparty // Обновляем данные этого контрагента
-							: counterparty // Остальные остаются без изменений
+				return prevCounterparties.map((counterparty) =>
+					counterparty.counterparty_id === updatedCounterparty.counterparty_id
+						? updatedCounterparty
+						: counterparty
 				);
 			});
 
-			// Закрываем модальное окно
 			setEditModalOpen(false);
-
-			// Уведомление об успешном сохранении
-			// alert("Контрагент успешно обновлен!");
 		} catch (error) {
 			console.error("Ошибка сохранения контрагента:", error);
 			alert("Не удалось сохранить контрагента.");
@@ -100,7 +91,6 @@ export const SellersContent = ({ mainFormData }) => {
 			setCounterparties((prevCounterparties) =>
 				prevCounterparties.filter((counterparty) => counterparty.counterparty_id !== counterpartyId)
 			);
-			// alert("Контрагент успешно удален!");
 		} catch (error) {
 			console.error("Ошибка при удалении контрагента:", error);
 			alert("Не удалось удалить контрагента.");
@@ -122,15 +112,15 @@ export const SellersContent = ({ mainFormData }) => {
 								<AddCounterpartyModal
 									onClose={closeModal}
 									onAdd={(newCounterparty) => {
-										setCounterparties((prev) => [...prev, newCounterparty]); // добавляем нового контрагента в список
+										setCounterparties((prev) => [...prev, newCounterparty]);
 									}}
 								/>
 							)}
 						</div>
 						<ContractorSearch
 							searchQuery={searchQuery}
-							setSearchQuery={setSearchQuery} // Передаем setSearchQuery
-							counterparties={counterparties} // передаем список контрагентов
+							setSearchQuery={setSearchQuery}
+							counterparties={counterparties}
 						/>
 					</p>
 					<p> </p>

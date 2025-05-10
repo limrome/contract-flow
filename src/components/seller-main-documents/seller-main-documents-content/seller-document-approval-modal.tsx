@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { fetchCounterparties } from "../../services/counterparty-service";
 
-// import { counterparties } from "../../sellers/content/sellers-content";
-
 interface DocumentApprovalModalProps {
 	showModal: boolean;
 	onClose: () => void;
@@ -34,10 +32,9 @@ const SellerDocumentApprovalModal: React.FC<DocumentApprovalModalProps> = ({
 		setShowSuggestions(false);
 	};
 
-	// Обработчик отправки данных
 	const handleSubmit = () => {
-		onSubmit(counterparty, comment); // Отправляем контрагента и комментарий
-		onClose(); // Закрываем модальное окно после отправки
+		onSubmit(counterparty, comment);
+		onClose();
 	};
 
 	if (!showModal) return null;
@@ -59,25 +56,23 @@ const SellerDocumentApprovalModal: React.FC<DocumentApprovalModalProps> = ({
 							id="counterparty"
 							placeholder="Введите контрагента"
 							value={counterparty}
-							// onChange={(e) => setCounterparty(e.target.value)}
 							onChange={(e) => {
 								setCounterparty(e.target.value);
 								setShowSuggestions(true);
 							}}
 							onFocus={() => setShowSuggestions(true)}
-							onBlur={() => setTimeout(() => setShowSuggestions(false), 200)} // 👈 задержка, чтобы успеть кликнуть
+							onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
 							autoComplete="off"
 						/>
 						{showSuggestions && filteredCounterparties.length > 0 && (
 							<ul className="suggestion-list">
 								{filteredCounterparties.map((c) => {
-									const name = c.data.companyName || c.data.fullName; // универсальное имя
+									const name = c.data.companyName || c.data.fullName;
 									return (
 										<li
 											key={c.id}
 											className="suggestion-item"
-											onMouseDown={() => handleSelect(name)} // 👈 именно onMouseDown, не onClick
-										>
+											onMouseDown={() => handleSelect(name)}>
 											{name}
 										</li>
 									);

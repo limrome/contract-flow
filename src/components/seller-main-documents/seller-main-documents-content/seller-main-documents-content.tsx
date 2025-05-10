@@ -157,7 +157,6 @@ export const SellerMainDocumentsContent = ({ mainFormData }) => {
 										<tr key={doc.id} onClick={() => navigate(`/document/${doc.id}`)}>
 											<td>{doc.data.companyName}</td>
 											<td>{doc.data.contractNumber}</td>
-											{/* <td>{doc.data.status}</td> */}
 											<td>{doc.data.date}</td>
 										</tr>
 									))}
@@ -173,7 +172,7 @@ export const SellerMainDocumentsContent = ({ mainFormData }) => {
 								<h2>Согласованные документы</h2>
 								<SellerDocumentSearch
 									searchQuery={searchQuery}
-									setSearchQuery={setSearchQuery} // Передаем setSearchQuery
+									setSearchQuery={setSearchQuery} 
 								/>
 							</div>
 						</p>
@@ -195,7 +194,6 @@ export const SellerMainDocumentsContent = ({ mainFormData }) => {
 											<tr key={doc.id} onClick={() => navigate(`/document/${doc.id}`)}>
 												<td>{doc.data.companyName}</td>
 												<td>{doc.data.contractNumber}</td>
-												{/* <td>{doc.data.status}</td> */}
 												<td>{doc.data.date}</td>
 											</tr>
 										))}
@@ -211,7 +209,7 @@ export const SellerMainDocumentsContent = ({ mainFormData }) => {
 								<h2>Несогласованные документы</h2>
 								<SellerDocumentSearch
 									searchQuery={searchQuery}
-									setSearchQuery={setSearchQuery} // Передаем setSearchQuery
+									setSearchQuery={setSearchQuery} 
 								/>
 							</div>
 						</p>
@@ -242,63 +240,6 @@ export const SellerMainDocumentsContent = ({ mainFormData }) => {
 						<p> </p>
 					</div>
 				): null
-				//  : (
-				// 	<div className="paper">
-				// 		<p className="justify">
-				// 			<div style={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
-				// 				<h2>Созданные документы</h2>
-				// 				<SellerDocumentSearch
-				// 					searchQuery={searchQuery}
-				// 					setSearchQuery={setSearchQuery} // Передаем setSearchQuery
-				// 				/>
-				// 			</div>
-				// 		</p>
-				// 		<p> </p>
-				// 		<p> </p>
-				// 		<div className="content-container-table-main">
-				// 			<Table bordered responsive>
-				// 				<thead>
-				// 					<tr className="table-header">
-				// 						<td>Контрагенты</td>
-				// 						<td>Документы</td>
-				// 						<td>Дата</td>
-				// 						<td>Согласование</td>
-				// 					</tr>
-				// 				</thead>
-				// 				<tbody>
-				// 					{filteredDocuments
-				// 						.filter((doc) => doc.data.status === "Ожидается согласование")
-				// 						.map((doc) => (
-				// 							<tr
-				// 								key={doc.id}
-				// 								// onClick={() => navigate(`/document/${doc.id}`)}
-				// 							>
-				// 								<td>{doc.data.companyName}</td>
-				// 								<td>{doc.data.contractNumber}</td>
-				// 								<td>{doc.data.date}</td>
-				// 								<td>
-				// 									<button className="icon-btn" title="На согласование" onClick={openModal}>
-				// 										<EditIcon size={18} />
-				// 									</button>
-				// 								</td>
-				// 							</tr>
-				// 						))}
-				// 				</tbody>
-				// 			</Table>
-				// 			<SellerDocumentApprovalModal
-				// 				showModal={modalOpen}
-				// 				onClose={closeModal}
-				// 				onSubmit={handleModalSubmit}
-				// 			/>
-				// 		</div>
-				// 		{/* <DocumentApprovalModal
-				// 			showModal={modalOpen}
-				// 			onClose={closeModal}
-				// 			onSubmit={handleModalSubmit}
-				// 		/> */}
-				// 		<p> </p>
-				// 	</div>
-			//  )
 			}
 			</div>
 		</>

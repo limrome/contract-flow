@@ -1,8 +1,7 @@
 import * as React from "react";
 import "./styles.scss";
 import { DocumentCreatorSidebar } from "./sidebar/document-creator-sidebar";
-import { DocumentCreatorMainContent } from "./content/document-creator-main-content";
-
+import {DocumentCreatorMainContent}  from "./content/document-creator-main-content";
 import { DocumentCreatorNavigation } from "./navigation/document-cretor-navigation";
 import "./DocumentApprovalModal.scss";
 
@@ -27,7 +26,7 @@ export const DocumentCreatorMain = () => {
 					setMainFormDataDocument={setMainFormData}
 				/>
 				<DocumentCreatorMainContent mainFormData={mainFormData} />
-				<DocumentCreatorNavigation mainFormData={mainFormData} setMainFormData={setMainFormData} />
+				<DocumentCreatorNavigation />
 			</div>
 		</div>
 	);
