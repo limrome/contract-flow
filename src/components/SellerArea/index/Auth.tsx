@@ -22,18 +22,36 @@ const Auth = () => {
 				email,
 				password,
 			});
+			console.log(response.data);
 
-			const data = await response;
+			const token = response.data.token;
+			const userData = response.data.user;
 
-			if (data) {
-				localStorage.setItem("access", data.data?.token);
+			if (token && userData) {
+				localStorage.setItem("access", token);
+
+				localStorage.setItem(
+					"user",
+					JSON.stringify({
+						userId: userData.user_id,
+						role: userData.role,
+						counterpartyId: userData.counterparty_id,
+					})
+				);
+				console.log("Пробуем сохранить токен:", token);
+				console.log("Из localStorage:", localStorage.getItem("access"));
 				window.location.href = "/";
 			} else {
-				setError(data.error || "Неверный логин или пароль");
+				setError("Неверный логин или пароль");
 			}
-		} catch (err) {
+		} catch (err: any) {
 			console.error("Ошибка при логине:", err);
-			setError("Произошла ошибка при входе.");
+			if (err.response) {
+				console.error("Ответ от сервера:", err.response);
+			}
+			setError(
+				err.response?.data?.error || "Произошла ошибка при входе. Проверьте подключение к серверу."
+			);
 		}
 	};
 

@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaSave, FaTimes } from "react-icons/fa";
+import axios from "axios";
 
 interface EditCounterpartyModalProps {
 	onClose: () => void;
 	type: "individual" | "company";
-	data: any; 
-	onSave: (updatedData: any) => void; 
+	data: any;
+	onSave: (updatedData: any) => void;
 }
 
 const EditCounterpartyModalProfile: React.FC<EditCounterpartyModalProps> = ({
@@ -14,24 +15,85 @@ const EditCounterpartyModalProfile: React.FC<EditCounterpartyModalProps> = ({
 	data,
 	onSave,
 }) => {
-	// Состояние для редактируемых данных
-	const [formData, setFormData] = useState(data);
-	console.log(formData);
+	const [formData, setFormData] = useState<any>(data);
+	const [isSaving, setIsSaving] = useState(false);
+	const [error, setError] = useState("");
 
+	useEffect(() => {
+		setFormData(data);
+	}, [data]);
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
-		console.log(`Changing ${name} to ${value}`); 
-		setFormData({
-			...formData,
+
+		setFormData((prevData: any) => ({
+			...prevData,
 			[name]: value,
-		});
+		}));
 	};
 
-	const handleSave = () => {
-		onSave(formData); 
-		onClose(); 
+	const handleSave = async () => {
+		const updatedData: any = {};
+
+		fields.forEach(({ field }) => {
+			updatedData[field] = formData[field] || null;
+		});
+
+		setIsSaving(true);
+		setError("");
+
+		try {
+			const counterpartyId = formData.counterparty_id;
+
+			if (!counterpartyId) {
+				throw new Error("Не удалось получить ID контрагента.");
+			}
+
+			const response = await axios.put(
+				`http://localhost:8000/api/counterparties/${counterpartyId}/`,
+				updatedData
+			);
+
+			onSave(response.data);
+			onClose();
+		} catch (err) {
+			setError("Ошибка при сохранении данных.");
+			console.error("Error while saving:", err);
+		} finally {
+			setIsSaving(false);
+		}
 	};
+
+
+	const fields =
+		type === "company"
+			? [
+					{ label: "Наименование компании", field: "full_name" },
+					{ label: "ФИО Генерального директора", field: "director_name" },
+					{ label: "Юридический адрес", field: "legal_address" },
+					{ label: "Наименование банка", field: "bank_name" },
+					{ label: "Расчетный счет", field: "account" },
+					{ label: "Корпоративный счет", field: "corp_account" },
+					{ label: "ИНН", field: "inn" },
+					{ label: "КПП", field: "kpp" },
+					{ label: "ОГРН", field: "ogrn" },
+					{ label: "Номер телефона", field: "phone" },
+					{ label: "Почта", field: "email" },
+			  ]
+			: [
+					{ label: "ФИО", field: "full_name" },
+					{ label: "Дата рождения", field: "birth_date", type: "date" },
+					{ label: "Серия паспорта", field: "passport_series" },
+					{ label: "Номер паспорта", field: "passport_number" },
+					{ label: "Дата выдачи", field: "issue_date", type: "date" },
+					{ label: "Место рождения", field: "birth_place" },
+					{ label: "Кем выдан", field: "issued_by" },
+					{ label: "Код подразделения", field: "passport_code" },
+					{ label: "Адрес", field: "address" },
+					{ label: "ИНН", field: "inn" },
+					{ label: "Номер телефона", field: "phone" },
+					{ label: "Почта", field: "email" },
+			  ];
 
 	return (
 		<div className="modal-backdrop-edit-profile">
@@ -41,219 +103,26 @@ const EditCounterpartyModalProfile: React.FC<EditCounterpartyModalProps> = ({
 				</button>
 				<h2 className="modal__title">Редактировать</h2>
 				<div className="modal__form-edit">
-					{type === "company" ? (
-						<>
-							<div className="modal__field-edit">
-								<label>Наименование компании</label>
-								<input
-									type="text"
-									name="companyName"
-									value={formData.companyName || ""}
-									onChange={handleInputChange}
-								/>
-							</div>
-							<div className="modal__field-edit">
-								<label>ФИО Генерального директора</label>
-								<input
-									type="text"
-									name="directorName"
-									value={formData.directorName || ""}
-									onChange={handleInputChange}
-								/>
-							</div>
-							<div className="modal__field-edit">
-								<label>Юридический адрес</label>
-								<input
-									type="text"
-									name="legalAddress"
-									value={formData.legalAddress || ""}
-									onChange={handleInputChange}
-								/>
-							</div>
-							<div className="modal__field-edit">
-								<label>Наименование банка</label>
-								<input
-									type="text"
-									name="bankName"
-									value={formData.bankName || ""}
-									onChange={handleInputChange}
-								/>
-							</div>
-							<div className="modal__field-edit">
-								<label>Расчетный счет</label>
-								<input
-									type="text"
-									name="account"
-									value={formData.account || ""}
-									onChange={handleInputChange}
-								/>
-							</div>
-							<div className="modal__field-edit">
-								<label>Корпоративный счет</label>
-								<input
-									type="text"
-									name="corpAccount"
-									value={formData.corpAccount || ""}
-									onChange={handleInputChange}
-								/>
-							</div>
-							<div className="modal__field-edit">
-								<label>ИНН</label>
-								<input
-									type="text"
-									name="innUr"
-									value={formData.innUr || ""}
-									onChange={handleInputChange}
-								/>
-							</div>
-							<div className="modal__field-edit">
-								<label>КПП</label>
-								<input
-									type="text"
-									name="kpp"
-									value={formData.kpp || ""}
-									onChange={handleInputChange}
-								/>
-							</div>
-							<div className="modal__field-edit">
-								<label>ОГРН</label>
-								<input
-									type="text"
-									name="ogrn"
-									value={formData.ogrn || ""}
-									onChange={handleInputChange}
-								/>
-							</div>
-							<div className="modal__field-edit">
-								<label>Номер телефона</label>
-								<input
-									type="text"
-									name="phoneUr"
-									value={formData.phoneUr || ""}
-									onChange={handleInputChange}
-								/>
-							</div>
-							<div className="modal__field-edit">
-								<label>Почта</label>
-								<input
-									type="email"
-									name="emailUr"
-									value={formData.emailUr || ""}
-									onChange={handleInputChange}
-								/>
-							</div>
-						</>
-					) : (
-						<>
-							<div className="modal__field-edit">
-								<label>ФИО</label>
-								<input
-									type="text"
-									name="fullName"
-									value={formData.fullName || ""}
-									onChange={handleInputChange}
-								/>
-							</div>
-							<div className="modal__field-edit">
-								<label>Дата рождения</label>
-								<input
-									type="date"
-									name="birthDate"
-									value={formData.birthDate || ""}
-									onChange={handleInputChange}
-								/>
-							</div>
-							<div className="modal__field-edit">
-								<label>Серия и номер паспорта</label>
-								<input
-									type="text"
-									name="passportNumber"
-									value={formData.passportNumber}
-									onChange={handleInputChange}
-								/>
-							</div>
-							<div className="modal__field-edit">
-								<label>Дата выдачи</label>
-								<input
-									type="date"
-									name="passportIssueDate"
-									value={formData.passportIssueDate || ""}
-									onChange={handleInputChange}
-								/>
-							</div>
-							<div className="modal__field-edit">
-								<label>Место рождения</label>
-								<input
-									type="text"
-									name="birthPlace"
-									value={formData.birthPlace || ""}
-									onChange={handleInputChange}
-								/>
-							</div>
-							<div className="modal__field-edit">
-								<label>Кем выдан</label>
-								<input
-									type="text"
-									name="passportIssuer"
-									value={formData.passportIssuer || ""}
-									onChange={handleInputChange}
-								/>
-							</div>
-							<div className="modal__field-edit">
-								<label>Код подразделения</label>
-								<input
-									type="text"
-									name="passportCode"
-									value={formData.passportCode || ""}
-									onChange={handleInputChange}
-								/>
-							</div>
-							<div className="modal__field-edit">
-								<label>Адрес</label>
-								<input
-									type="text"
-									name="address"
-									value={formData.address || ""}
-									onChange={handleInputChange}
-								/>
-							</div>
-							<div className="modal__field-edit">
-								<label>ИНН</label>
-								<input
-									type="text"
-									name="inn"
-									value={formData.inn || ""}
-									onChange={handleInputChange}
-								/>
-							</div>
-							<div className="modal__field-edit">
-								<label>Номер телефона</label>
-								<input
-									type="text"
-									name="phone"
-									value={formData.phone || ""}
-									onChange={handleInputChange}
-								/>
-							</div>
-							<div className="modal__field-edit">
-								<label>Почта</label>
-								<input
-									type="email"
-									name="email"
-									value={formData.email || ""}
-									onChange={handleInputChange}
-								/>
-							</div>
-						</>
-					)}
-				</div>
-				<div className="modal__buttons-edit">
-					<button className="btn-edit" onClick={handleSave}>
-						<FaSave size={12} /> Сохранить
-					</button>
-					<button className="btn-edit btn--secondary" onClick={onClose}>
-						Отмена
-					</button>
+					{fields.map(({ label, field, type = "text" }) => (
+						<div className="modal__field-edit" key={field}>
+							<label>{label}</label>
+							<input
+								type={type}
+								name={field}
+								value={formData[field] || ""}
+								onChange={handleInputChange}
+							/>
+						</div>
+					))}
+					<div className="modal__buttons-edit">
+						{error && <div className="error-message">{error}</div>}
+						<button className="btn-edit" onClick={handleSave} disabled={isSaving}>
+							<FaSave size={12} /> {isSaving ? "Сохраняем..." : "Сохранить"}
+						</button>
+						<button className="btn--secondary" onClick={onClose}>
+							Отмена
+						</button>
+					</div>
 				</div>
 			</div>
 		</div>

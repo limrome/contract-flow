@@ -24,7 +24,7 @@ export const SellerMainDocumentsSidebar = ({ setMainFormDataDocument, mainFormDa
 					mainFormDataDocument.documentTypeState === "toBeAgreedDocuments" ? "active" : ""
 				}`}
 				onClick={() => handleDocumentTypeChangeClick("toBeAgreedDocuments")}>
-				<span>На согласовании</span>
+				<span>Ожидается согласование</span>
 			</button>
 
 			<button

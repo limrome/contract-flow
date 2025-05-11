@@ -6,6 +6,7 @@ import { SidesData } from "./blocks/sides-data";
 import { ItemListData } from "./blocks/item-list-data";
 import { RightsObligations } from "./blocks/rights-and-obligations";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export const DocumentCreatorSidebar = ({ setMainFormData, mainFormData }) => {
 	/* Основная информация */
@@ -28,6 +29,7 @@ export const DocumentCreatorSidebar = ({ setMainFormData, mainFormData }) => {
 	// };
 
 	console.log(mainFormData);
+	const navigate = useNavigate();
 
 	/* Обработчик изменения состояния полей */
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -114,6 +116,7 @@ export const DocumentCreatorSidebar = ({ setMainFormData, mainFormData }) => {
 			const response = await axios.post("http://localhost:8000/api/documents/", payload); 
 			console.log("Документ успешно сохранён, ID:", response.data.document_id);
 			alert("Документ сохранён!");
+			navigate("/");
 		} catch (error) {
 			console.error("Ошибка при сохранении документа:", error);
 			alert("Ошибка при сохранении. Проверьте консоль.");

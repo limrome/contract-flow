@@ -25,11 +25,12 @@ export const FormLayout = () => {
 	console.log(location);
 	const isDocumentPage = location.pathname.match(/^\/document\/\d+$/);
 	const isCreatorPage = location.pathname === "/creator";
+	const isSellerDocumentPage = location.pathname.match(/^\/seller\/document\/\d+$/);
 	return (
 		<>
 			<header className="app-header">
 				<h2>Система по работе с договорами</h2>
-				{isCreatorPage || isDocumentPage ? (
+				{isCreatorPage || isDocumentPage || isSellerDocumentPage ? (
 					<button className="btn-export" onClick={exportHTML}>
 						Export
 					</button>

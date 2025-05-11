@@ -17,6 +17,7 @@ export const SellerMainDocuments = () => {
 		searchToBeAgreed: "",
 		searchNotAgreed: "",
 		documentTypeState: "allDocuments",
+		counterpartyId: null,
 	});
 
 
@@ -26,8 +27,8 @@ export const SellerMainDocuments = () => {
 				mainFormDataDocument={mainFormData}
 				setMainFormDataDocument={setMainFormData}
 			/>
-			<SellerMainDocumentsContent mainFormData={mainFormData}  />
-			<SellerMainDocumentsNavigation mainFormData={mainFormData} setMainFormData={setMainFormData} />
+			<SellerMainDocumentsContent mainFormData={mainFormData}  setMainFormData={setMainFormData}/>
+			<SellerMainDocumentsNavigation />
 		</div>
 	);
 };

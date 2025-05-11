@@ -19,7 +19,7 @@ const DocumentApprovalModal: React.FC<DocumentApprovalModalProps> = ({
 	const [counterparties, setCounterparties] = useState<any[]>([]); // Для хранения контрагентов
 	const [isLoading, setIsLoading] = useState(true); // Статус загрузки данных
 	const [isSubmitting, setIsSubmitting] = useState(false); // Статус отправки комментария
-
+	const status = "На согласовании";
 	useEffect(() => {
 		fetch("http://localhost:8000/api/counterparties")
 			.then((res) => res.json())
@@ -51,6 +51,8 @@ const DocumentApprovalModal: React.FC<DocumentApprovalModalProps> = ({
 				document_id: documentId,
 				counterparty_id: counterpartyId,
 				comment: comment,
+				is_manager: true,
+				status: status,
 			});
 
 			if (response.status === 201) {
