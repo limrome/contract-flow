@@ -1,7 +1,14 @@
 import * as React from "react";
 import { DeliveryData } from "./delivery-data";
+import { useEffect } from "react";
 
 export const BasicInformation = ({ handleChange, mainFormData, setMainFormData }) => {
+	useEffect(() => {
+		if (!mainFormData.contractNumber) {
+			const newNumber = `Д-${Date.now().toString().slice(-6)}`;
+			setMainFormData((prev) => ({ ...prev, contractNumber: newNumber }));
+		}
+	}, [mainFormData.isDkp]);
 	const cities = [
 		"Москва",
 		"Санкт-Петербург",
@@ -17,7 +24,8 @@ export const BasicInformation = ({ handleChange, mainFormData, setMainFormData }
 				{mainFormData.isKp && (
 					<>
 						<label>Номер КП</label>
-						<input className="input_text"
+						<input
+							className="input_text"
 							type="text"
 							name="kpNumber"
 							value={mainFormData.kpNumber}
@@ -26,7 +34,13 @@ export const BasicInformation = ({ handleChange, mainFormData, setMainFormData }
 						/>
 
 						<label>Дата КП</label>
-						<input className="input_text" type="date" name="kpDate" value={mainFormData.kpDate} onChange={handleChange} />
+						<input
+							className="input_text"
+							type="date"
+							name="kpDate"
+							value={mainFormData.kpDate}
+							onChange={handleChange}
+						/>
 					</>
 				)}
 
@@ -34,7 +48,8 @@ export const BasicInformation = ({ handleChange, mainFormData, setMainFormData }
 				{mainFormData.isDkp && (
 					<>
 						<label>Номер договора</label>
-						<input className="input_text"
+						<input
+							className="input_text"
 							type="text"
 							name="contractNumber"
 							value={mainFormData.contractNumber}
@@ -43,7 +58,8 @@ export const BasicInformation = ({ handleChange, mainFormData, setMainFormData }
 						/>
 
 						<label>Дата договора</label>
-						<input className="input_text"
+						<input
+							className="input_text"
 							type="date"
 							name="contractDate"
 							value={mainFormData.contractDate}
@@ -51,7 +67,8 @@ export const BasicInformation = ({ handleChange, mainFormData, setMainFormData }
 						/>
 
 						<label>
-							<input className="input_text"
+							<input
+								className="input_text"
 								type="checkbox"
 								name="chooseFromList"
 								checked={mainFormData.chooseFromList}
@@ -75,7 +92,8 @@ export const BasicInformation = ({ handleChange, mainFormData, setMainFormData }
 								))}
 							</select>
 						) : (
-							<input className="input_text"
+							<input
+								className="input_text"
 								type="text"
 								name="city"
 								value={mainFormData.city}

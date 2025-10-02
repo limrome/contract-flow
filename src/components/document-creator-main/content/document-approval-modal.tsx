@@ -14,11 +14,12 @@ const DocumentApprovalModal: React.FC<DocumentApprovalModalProps> = ({
 }) => {
 	const [counterparty, setCounterparty] = useState(""); // Для поиска контрагента по имени
 	const [counterpartyId, setCounterpartyId] = useState<string | null>(null); // Для хранения ID выбранного контрагента
-	const [comment, setComment] = useState(""); // Для комментария
+	const [comment, setComment] = useState("Просьба согласовать"); // Для комментария
 	const [showSuggestions, setShowSuggestions] = useState(false); // Для показа подсказок
 	const [counterparties, setCounterparties] = useState<any[]>([]); // Для хранения контрагентов
 	const [isLoading, setIsLoading] = useState(true); // Статус загрузки данных
 	const [isSubmitting, setIsSubmitting] = useState(false); // Статус отправки комментария
+	
 	const status = "На согласовании";
 	useEffect(() => {
 		fetch("http://localhost:8000/api/counterparties")

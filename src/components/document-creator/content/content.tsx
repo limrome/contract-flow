@@ -4,7 +4,17 @@ import "../styles.scss";
 import { useState } from "react";
 import axios from "axios";
 
-export const DocumentCreatorContent = ({ mainFormData }) => {
+interface DocumentCreatorContentProps {
+	mainFormData: any;
+	setMainFormData?: React.Dispatch<any>; // ✅ делаем необязательным
+	editable?: boolean; // ✅ добавляем editable
+}
+
+export const DocumentCreatorContent: React.FC<DocumentCreatorContentProps> = ({
+	mainFormData,
+	setMainFormData,
+	editable = false,
+}) => {
 	const calcTotalProductSum = () => {
 		return mainFormData.products.reduce(
 			(acc, product) => acc + product.quantity_ * product.price_,
@@ -73,23 +83,23 @@ export const DocumentCreatorContent = ({ mainFormData }) => {
 		</>
 	);
 
-	const exportHTML = () => {
-		var header =
-			"<html xmlns:o='urn:schemas-microsoft-com:office:office' " +
-			"xmlns:w='urn:schemas-microsoft-com:office:word' " +
-			"xmlns='http://www.w3.org/TR/REC-html40'>" +
-			"<head><meta charset='utf-8'><title>Export HTML to Word Document with JavaScript</title></head><body>";
-		var footer = "</body></html>";
-		var sourceHTML = header + document.getElementById("source-html").innerHTML + footer;
+	// const exportHTML = () => {
+	// 	var header =
+	// 		"<html xmlns:o='urn:schemas-microsoft-com:office:office' " +
+	// 		"xmlns:w='urn:schemas-microsoft-com:office:word' " +
+	// 		"xmlns='http://www.w3.org/TR/REC-html40'>" +
+	// 		"<head><meta charset='utf-8'><title>Export HTML to Word Document with JavaScript</title></head><body>";
+	// 	var footer = "</body></html>";
+	// 	var sourceHTML = header + document.getElementById("source-html").innerHTML + footer;
 
-		var source = "data:application/vnd.ms-word;charset=utf-8," + encodeURIComponent(sourceHTML);
-		var fileDownload = document.createElement("a");
-		document.body.appendChild(fileDownload);
-		fileDownload.href = source;
-		fileDownload.download = "document.doc";
-		fileDownload.click();
-		document.body.removeChild(fileDownload);
-	};
+	// 	var source = "data:application/vnd.ms-word;charset=utf-8," + encodeURIComponent(sourceHTML);
+	// 	var fileDownload = document.createElement("a");
+	// 	document.body.appendChild(fileDownload);
+	// 	fileDownload.href = source;
+	// 	fileDownload.download = "document.doc";
+	// 	fileDownload.click();
+	// 	document.body.removeChild(fileDownload);
+	// };
 
 	return (
 		<>
@@ -121,11 +131,11 @@ export const DocumentCreatorContent = ({ mainFormData }) => {
 						Купли продажи
 					</p>
 					<p style={{ height: "20px", textIndent: "0.25in", display: "block" }}> </p>
-					<p className="justify" style={{ height: "20px", textIndent: "0.25in", display: "block" }}>
-						<table style={{ width: "100%", borderCollapse: "collapse", border: "none" }}>
+					<p className="justify" style={{ height: "20px", textIndent: "0.25in", display: "block" , marginBottom: "40px"}}>
+						<table  id="no-border-table" style={{ width: "100%", borderCollapse: "collapse", border: "none", marginBottom: "20px"}}>
 							<tbody>
 								<tr>
-									<td style={{ textAlign: "left", height: "16px" }}>г. {mainFormData.city}</td>
+									<td style={{ textAlign: "left", height: "16px" , textIndent: "0.25in"}}>г. {mainFormData.city}</td>
 									<td style={{ textAlign: "right", height: "16px" }}>
 										{new Date(mainFormData.contractDate)
 											.toLocaleDateString("ru-RU", {
@@ -149,6 +159,7 @@ export const DocumentCreatorContent = ({ mainFormData }) => {
 									textIndent: "0.25in",
 									display: "block",
 									marginTop: "60px",
+									textAlign: "justify",
 								}}>
 								{mainFormData.titleOfCompany?.length
 									? mainFormData.titleOfCompany
@@ -181,7 +192,7 @@ export const DocumentCreatorContent = ({ mainFormData }) => {
 					{/* Продавец - физ.лицо, покупатель - юр.лицо */}
 					{mainFormData.isDkp && mainFormData.isFizFaceState && !mainFormData.isBuyerFizFace && (
 						<>
-							<p style={{ height: "20px", textIndent: "0.25in", display: "block" }}>
+							<p style={{ height: "20px", textIndent: "0.25in", display: "block" ,textAlign: "justify"}}>
 								Гражданин {mainFormData.sellerFizFio?.length ? mainFormData.sellerFizFio : "___"},
 								дата рождения:{" "}
 								{mainFormData.birthDate?.length
@@ -217,7 +228,7 @@ export const DocumentCreatorContent = ({ mainFormData }) => {
 					{/* Продавец и покупатель - Физические лица */}
 					{mainFormData.isDkp && mainFormData.isFizFaceState && mainFormData.isBuyerFizFace && (
 						<>
-							<p style={{ height: "20px", textIndent: "0.25in", display: "block" }}>
+							<p style={{ height: "20px", textIndent: "0.25in", display: "block", textAlign: "justify" }}>
 								Гражданин {mainFormData.sellerFizFio?.length ? mainFormData.sellerFizFio : "___"},
 								дата рождения:{" "}
 								{mainFormData.birthDate?.length
@@ -258,7 +269,7 @@ export const DocumentCreatorContent = ({ mainFormData }) => {
 					{/* Продавец - юр.лицо, покупатель - физ.лицо */}
 					{mainFormData.isDkp && !mainFormData.isFizFaceState && mainFormData.isBuyerFizFace && (
 						<>
-							<p style={{ height: "20px", textIndent: "0.25in", display: "block" }}>
+							<p style={{ height: "20px", textIndent: "0.25in", display: "block", textAlign: "justify" }}>
 								{mainFormData.titleOfCompany?.length
 									? mainFormData.titleOfCompany
 									: "______________________________________"}
@@ -308,10 +319,11 @@ export const DocumentCreatorContent = ({ mainFormData }) => {
 							display: "block",
 							textAlign: "center",
 							fontWeight: "bold",
+							marginTop: "20px",
 						}}>
 						1. Предмет договора
 					</p>
-					<p style={{ height: "15px", textIndent: "0.25in", display: "block" }}></p>
+					<p style={{ height: "15px", textIndent: "0.25in", display: "block", textAlign: "justify" }}></p>
 					{mainFormData.isDkp && mainFormData.delivery === "products" && (
 						<>
 							<p style={{ textIndent: "0.25in", display: "block", marginBottom: "1px" }}>
@@ -324,7 +336,7 @@ export const DocumentCreatorContent = ({ mainFormData }) => {
 					)}
 					{mainFormData.isDkp && mainFormData.delivery === "services" && (
 						<>
-							<p style={{ textIndent: "0.25in", display: "block", marginBottom: "1px" }}>
+							<p style={{ textIndent: "0.25in", display: "block", marginBottom: "1px", textAlign: "justify" }}>
 								1.1. По настоящему Договору Продавец обязуется оказать услуги Покупателю: (далее по
 								тексту - Товар) в количестве и ассортименте, указанных в п. 1.2 настоящего Договора,
 								а Покупатель обязуется принять Товар и уплатить за него цену в размере и в порядке,
@@ -334,7 +346,7 @@ export const DocumentCreatorContent = ({ mainFormData }) => {
 					)}
 					{mainFormData.isDkp && mainFormData.delivery === "productsServices" && (
 						<>
-							<p style={{ textIndent: "0.25in", display: "block", marginBottom: "1px" }}>
+							<p style={{ textIndent: "0.25in", display: "block", marginBottom: "1px" , textAlign: "justify"}}>
 								1.1. По настоящему Договору Продавец обязуется передать в собственность товары и
 								оказать услуги Покупателю: (далее по тексту - Товар) в количестве и ассортименте,
 								указанных в п. 1.2 настоящего Договора, а Покупатель обязуется принять Товар и
@@ -344,19 +356,27 @@ export const DocumentCreatorContent = ({ mainFormData }) => {
 					)}
 					{mainFormData.isDkp && (
 						<>
-							<p style={{ textIndent: "0.25in", display: "block", marginTop: "1px" }}>
+							<p style={{ textIndent: "0.25in", display: "block", marginTop: "1px", textAlign: "justify" }}>
 								1.2. Продавец передает Покупателю следующие Товары:
 							</p>
 
 							<div className="content-container-table">
-								<Table bordered responsive>
+								<Table
+									className="gg"
+									bordered
+									responsive
+									style={{
+										width: "100%",
+										borderCollapse: "collapse",
+										textAlign: "justify",
+									}}>
 									<thead>
 										<tr>
-											<td>№</td>
-											<td>Наименование</td>
-											<td>Кол-во</td>
-											<td>Цена</td>
-											<td>Стоимость</td>
+											<td style={{ border: '1px solid black', padding: '8px' }}>№</td>
+											<td style={{ border: '1px solid black', padding: '8px' }}>Наименование</td>
+											<td style={{ border: '1px solid black', padding: '8px' }}>Кол-во</td>
+											<td style={{ border: '1px solid black', padding: '8px' }}>Цена</td>
+											<td style={{ border: '1px solid black', padding: '8px' }}>Стоимость</td>
 										</tr>
 									</thead>
 
@@ -365,14 +385,14 @@ export const DocumentCreatorContent = ({ mainFormData }) => {
 											<tbody>
 												{mainFormData.products.map((item, index) => (
 													<tr>
-														<td>{index + 1}</td>
-														<td>{item.name_?.length === 0 ? "<<!>>" : item.name_}</td>
-														<td>{item.quantity_}</td>
-														<td>
+														<td style={{ border: '1px solid black', padding: '8px' }}>{index + 1}</td>
+														<td style={{ border: '1px solid black', padding: '8px' }}>{item.name_?.length === 0 ? "<<!>>" : item.name_}</td>
+														<td style={{ border: '1px solid black', padding: '8px' }}>{item.quantity_}</td>
+														<td style={{ border: '1px solid black', padding: '8px' }}>
 															{Number(item.price_) +
 																Number((item.price_ * mainFormData.ndsPercent) / 100)}
 														</td>
-														<td>
+														<td style={{ border: '1px solid black', padding: '8px' }}>
 															{Number(item.price_) +
 																Number((item.price_ * mainFormData.ndsPercent) / 100) *
 																	item.quantity_}
@@ -393,18 +413,18 @@ export const DocumentCreatorContent = ({ mainFormData }) => {
 											<tbody>
 												{mainFormData.products.map((item, index) => (
 													<tr>
-														<td>{index + 1}</td>
-														<td>{item.name_?.length === 0 ? "<<!>>" : item.name_}</td>
-														<td>{item.quantity_?.length === 0 ? "<<!>>" : item.quantity_}</td>
-														<td>{item.price_?.length === 0 ? "<<!>>" : item.price_}</td>
-														<td>{item.price_ * item.quantity_}</td>
+														<td style={{ border: '1px solid black', padding: '8px' }}>{index + 1}</td>
+														<td style={{ border: '1px solid black', padding: '8px' }}>{item.name_?.length === 0 ? "<<!>>" : item.name_}</td>
+														<td style={{ border: '1px solid black', padding: '8px' }}>{item.quantity_?.length === 0 ? "<<!>>" : item.quantity_}</td>
+														<td style={{ border: '1px solid black', padding: '8px' }}>{item.price_?.length === 0 ? "<<!>>" : item.price_}</td>
+														<td style={{ border: '1px solid black', padding: '8px' }}>{item.price_ * item.quantity_}</td>
 													</tr>
 												))}
 												<tr>
-													<td colspan="4" style={{ textAlign: "right" }}>
+													<td style={{ border: '1px solid black', padding: '8px', textAlign: "right" }} colSpan="4">
 														Итого:{" "}
 													</td>
-													<td>{calcTotalProductSum()}</td>
+													<td style={{ border: '1px solid black', padding: '8px' }}>{calcTotalProductSum()}</td>
 												</tr>
 											</tbody>
 										</>
@@ -419,39 +439,40 @@ export const DocumentCreatorContent = ({ mainFormData }) => {
 									display: "block",
 									textAlign: "center",
 									fontWeight: "bold",
+									marginTop: "20px",
 								}}>
 								2. Права и обязанности сторон
 							</p>
 							<p style={{ height: "20px", textIndent: "0.25in", display: "block" }}></p>
 						</>
 					)}
-					<p style={{ height: "20px", textIndent: "0.25in", display: "block" }}>
+					<p style={{ height: "20px", textIndent: "0.25in", display: "block", textAlign: "justify" }}>
 						2.1. Продавец обязан:{" "}
 					</p>
 					<p
 						className="obligation"
-						style={{ textIndent: "0.5in", display: "block", height: "20px" }}>
+						style={{ textIndent: "0.5in", display: "block", height: "20px", textAlign: "justify" }}>
 						2.1.1. Передать Покупателю Товар надлежащего качества и в надлежащей упаковке в течение{" "}
 						{MyComponent({ number: mainFormData.term })} дней
 					</p>
-					<p style={{ height: "20px", textIndent: "0.25in", display: "block" }}></p>
+					<p style={{ height: "20px", textIndent: "0.25in", display: "block", textAlign: "justify" }}></p>
 					<p
 						className="obligation"
-						style={{ textIndent: "0.5in", display: "block", height: "20px" }}>
+						style={{ textIndent: "0.5in", display: "block", height: "20px", textAlign: "justify" }}>
 						2.1.2. Передать Товар свободным от прав третьих лиц.{" "}
 					</p>
-					<p style={{ height: "20px", textIndent: "0.25in", display: "block" }}>
+					<p style={{ height: "20px", textIndent: "0.25in", display: "block", textAlign: "justify" }}>
 						2.2. Покупатель обязан:{" "}
 					</p>
 					<p
 						className="obligation"
-						style={{ textIndent: "0.5in", display: "block", height: "20px" }}>
+						style={{ textIndent: "0.5in", display: "block", height: "20px", textAlign: "justify" }}>
 						2.2.1. Принять Товар от Продавца в течении{" "}
 						{MyComponent({ number: mainFormData.deadline })} дней.
 					</p>
 					<p
 						className="obligation"
-						style={{ textIndent: "0.5in", display: "block", height: "20px" }}>
+						style={{ textIndent: "0.5in", display: "block", height: "20px" , textAlign: "justify"}}>
 						2.2.2. Оплатить Товар в течении {MyComponent({ number: mainFormData.deadline })} дней.
 					</p>
 				</div>

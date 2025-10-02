@@ -6,11 +6,16 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	z-index: 1000;
-	backdrop-filter: blur(3px);
+	// z-index: 1000;
+	// backdrop-filter: blur(3px);
+	z-index: 9999;
+    backdrop-filter: blur(5px);
 
 	/* Стили для модального окна */
 	.modal-edit {
+
+
+		
 		background-color: #fff;
 		border-radius: 12px;
 		width: 100%;
@@ -19,7 +24,7 @@
 		position: relative;
 		box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
 		max-height: 90vh;
-		// overflow-y: auto;
+		overflow-y: auto;
 		font-family: "Times New Roman", Times, serif;
 		z-index: 2; /* Обеспечиваем, что модальное окно поверх всего */
 	}
@@ -67,7 +72,7 @@
 	}
 
 	.modal__field-edit label {
-		font-size: 0.9rem;
+		font-size: 1rem;
 		font-weight: 500;
 		color: #555;
 	}
@@ -77,7 +82,7 @@
 		padding: 0.5rem 0.1rem;
 		border: 1px solid #ddd;
 		border-radius: 8px;
-		font-size: 0.9rem;
+		font-size: 1.2rem;
 		color: #333;
 		background-color: #fff;
 		width: 100%;
@@ -101,7 +106,8 @@
 		justify-content: flex-end;
 	}
 	button {
-		font-size: 1rem;
+		font-size: 1.5rem;
+		font-weight: 500;
 		border: none;
 		border-radius: 8px;
 		cursor: pointer;

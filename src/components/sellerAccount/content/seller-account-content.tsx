@@ -41,6 +41,7 @@ export const SellerAccountContent: React.FC<SellerAccountContentProps> = ({ empl
 	const handleLogout = () => {
 		localStorage.removeItem("access");
 		navigate("/login");
+		window.location.reload(); // Перезагружает страницу после перехода
 	};
 
 	const [editModalOpen, setEditModalOpen] = useState(false);
@@ -63,7 +64,8 @@ export const SellerAccountContent: React.FC<SellerAccountContentProps> = ({ empl
 			<div style={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
 				<h2 className="profile-title">Профиль</h2>
 				<button className="btn-primary-ed" onClick={handleOpenModal}>
-					<FaEdit size={12} /> Редактировать
+					{/* <FaEdit size={12} />  */}
+					Редактировать
 				</button>
 			</div>
 
@@ -174,15 +176,15 @@ export const SellerAccountContent: React.FC<SellerAccountContentProps> = ({ empl
 				<button className="btn-primary" onClick={handleLogout}>
 					Выйти из аккаунта
 				</button>
+				{editModalOpen && (
+					<EditCounterpartyModalProfile
+						onClose={() => setEditModalOpen(false)}
+						type={selectedType}
+						data={selectedData}
+						onSave={handleSave}
+					/>
+				)}
 			</div>
-			{editModalOpen && (
-				<EditCounterpartyModalProfile
-					onClose={() => setEditModalOpen(false)}
-					type={selectedType}
-					data={selectedData}
-					onSave={handleSave}
-				/>
-			)}
 		</div>
 	);
 };

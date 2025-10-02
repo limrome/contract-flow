@@ -6,12 +6,15 @@ import { DocumentCreatorMain } from "../document-creator-main";
 import { SellersForDocument } from "../sellers";
 import { Document } from "../sellers/document/document";
 import { FormLayout } from "./layout";
+import AnalyticsDashboard from "../analytics/Analitics-dashboard";
+import { Analytics } from "../analytics";
 
 const Wrapper = styled.div`
 	width: 100vw;
 	height: 100vh;
 	background: #e5e5e5;
-	overflow: hidden;
+	overflow: auto;
+	scrollbar-width: none;
 `;
 
 export const Forms = () => {
@@ -26,6 +29,7 @@ export const Forms = () => {
 					<Route path="/document/:id" element={<Document />} />
 
 					<Route path="/documents" element={<DocumentCreatorMain />} />
+					<Route path="/analytics" element={<Analytics />} />
 				</Route>
 			</Routes>
 		</Wrapper>

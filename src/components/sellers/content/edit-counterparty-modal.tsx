@@ -138,7 +138,8 @@ const EditCounterpartyModal: React.FC<EditCounterpartyModalProps> = ({
 				<button className="modal__close-edit" onClick={onClose}>
 					<FaTimes size={20} />
 				</button>
-				<h2 className="modal__title">Редактировать контрагента</h2>
+				<h2 className="modal__title"
+				style={{ fontFamily: "Times New Roman, Times, serif", fontSize: "32px", letterSpacing: "1px" }}>Редактировать контрагента</h2>
 				<div className="modal__form-edit">
 					{fields.map(({ name, label, field, editable = true }) => (
 						<div className="modal__field-edit" key={name}>

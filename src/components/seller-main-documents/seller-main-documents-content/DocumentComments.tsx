@@ -88,7 +88,8 @@ const DocumentComments: React.FC<DocumentCommentsProps> = ({ documentId, userRol
 
 	return (
 		<div>
-			<h4>Комментарии</h4>
+			<h4
+				style={{ letterSpacing: '0.5px', fontSize: '1.1rem',  marginBottom: "0.5rem" }}>Комментарии</h4>
 			{comments.length > 0 ? (
 				comments.map((comment: any, index: number) => (
 					<div key={index} className="comment">
@@ -97,7 +98,7 @@ const DocumentComments: React.FC<DocumentCommentsProps> = ({ documentId, userRol
 								{userRole === "manager"
 									? !comment.is_manager
 										? "Контрагент: " + comment.counterparty_name
-										: "Вы (менеджер)"
+										: "Вы"
 									: !comment.is_manager
 									? "Вы"
 									: "Менеджер"}

@@ -99,7 +99,7 @@ const EditCounterpartyModalProfile: React.FC<EditCounterpartyModalProps> = ({
 		<div className="modal-backdrop-edit-profile">
 			<div className="modal-edit">
 				<button className="modal__close-edit" onClick={onClose}>
-					<FaTimes size={20} />
+					{/* <FaTimes size={20} /> */}
 				</button>
 				<h2 className="modal__title">Редактировать</h2>
 				<div className="modal__form-edit">
@@ -117,7 +117,8 @@ const EditCounterpartyModalProfile: React.FC<EditCounterpartyModalProps> = ({
 					<div className="modal__buttons-edit">
 						{error && <div className="error-message">{error}</div>}
 						<button className="btn-edit" onClick={handleSave} disabled={isSaving}>
-							<FaSave size={12} /> {isSaving ? "Сохраняем..." : "Сохранить"}
+							{/* <FaSave size={12} />  */}
+							{isSaving ? "Сохраняем..." : "Сохранить"}
 						</button>
 						<button className="btn--secondary" onClick={onClose}>
 							Отмена

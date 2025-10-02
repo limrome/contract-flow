@@ -109,6 +109,7 @@ export const DocumentCreator = () => {
 		isOpenItemsList: false,
 		nds: "",
 		products: [],
+		document_type: "contract",
 	});
 
 	console.log(mainFormData);

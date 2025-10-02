@@ -23,22 +23,25 @@ html{
 
 	h2 {
 		color: #264054;
-		font-family: "Times New Roman", Times, serif;
-		font-size: 20px;
+
 	}
 
 	.navigation {
 		min-height: 100vh;
-		width: 8%;
+		width: 10%;
 		height: 100%;
-		position: absolute;
-		font-size: 12px;
+		position: fixed;
+		font-size: 18px;
 		background-color: #c8d3d1;
 		font-family: "Times New Roman", Times, serif;
 		color: #264054;
 		font-weight: 600;
 		cursor: pointer;
 		scrollbar-width: none;
+		.navigation__header.active {
+			color: #000000; /* или любой цвет подсветки */
+			font-weight: bold;
+		}
 
 		.span {
 			margin-bottom: 10px;
@@ -95,14 +98,18 @@ html{
 	}
 
 	.content {
-		width: 92%;
+		width: 90%;
 		min-height: 100vh;
 		scrollbar-width: none;
 
 		height: 100%;
 		position: absolute;
-		margin-left: 8%;
+		margin-left: 10%;
 		background-color: #f8f9fb;
+		h2 {
+			font-size: 28px;
+			font-family: "Times New Roman", Times, serif;
+		}
 		.icon-btn {
 			background: none;
 			border: none;
@@ -296,6 +303,8 @@ html{
 		button {
 			border-color: #7f9b95;
 			cursor: pointer;
+					font-size: 18px;
+
 		}
 		.input {
 			@apply border rounded-xl px-3 py-2 w-full focus:outline-none focus:ring focus:ring-blue-300;
@@ -307,15 +316,16 @@ html{
 			padding: 0 25px;
 			margin: 0 15px 15px 0;
 			outline: none;
-			border: 1px solid #fff;
+			border: 1px solid #c8d3d1;
 			border-radius: 20px;
 			height: 46px;
 			line-height: 46px;
-			font-size: 14px;
-			font-weight: 600;
+			font-size: 17px;
+			font-weight: 900;
+			letter-spacing: 0.5px;
 			text-decoration: none;
-			color: #444;
-			background-color: #fff;
+			color: #264054;
+			background-color:  #c8d3d1;
 			box-shadow: 0 4px 6px rgba(65, 144, 143, 0.1), 0 1px 3px rgb(0 0 0 / 8%);
 			cursor: pointer;
 			user-select: none;
@@ -403,7 +413,7 @@ html{
 
 				td {
 					padding: 1rem 0.75rem;
-					font-size: 12px;
+					font-size: 16px;
 					color: #374151;
 				}
 			}

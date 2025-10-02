@@ -25,7 +25,7 @@ export const DocumentCreatorMain = () => {
 					mainFormDataDocument={mainFormData}
 					setMainFormDataDocument={setMainFormData}
 				/>
-				<DocumentCreatorMainContent mainFormData={mainFormData} />
+				<DocumentCreatorMainContent mainFormData={mainFormData}  />
 				<DocumentCreatorNavigation />
 			</div>
 		</div>

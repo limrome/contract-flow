@@ -1,12 +1,14 @@
 import * as React from "react";
 import Table from "react-bootstrap/Table";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import DocumentSearch from "./document-search";
 import { useNavigate } from "react-router-dom";
 import { RiMailSendFill } from "react-icons/ri";
 import DocumentApprovalModal from "./document-approval-modal";
-import { useEffect } from "react";
 import axios from "axios";
+
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 const EditIcon = RiMailSendFill as React.FC<{ size?: number }>;
 
@@ -16,26 +18,11 @@ export const DocumentCreatorMainContent = ({ mainFormData }) => {
 	const [modalOpen, setModalOpen] = useState(false);
 	const [selectedDocumentId, setSelectedDocumentId] = useState<string | null>(null);
 
+	const [currentPage, setCurrentPage] = useState(1);
+	const [itemsPerPage, setItemsPerPage] = useState(7); // Можно менять, например 20 или 50
+	const [showAll, setShowAll] = useState(false);
+
 	const navigate = useNavigate();
-
-	useEffect(() => {
-		const fetchDocuments = async () => {
-			try {
-				const response = await axios.get("http://localhost:8000/api/documents/");
-				setDocuments(response.data);
-			} catch (error) {
-				console.error("Ошибка при загрузке документов:", error);
-			}
-		};
-
-		fetchDocuments();
-	}, []);
-
-	const openModal = (documentId: string) => {
-		setSelectedDocumentId(documentId);
-		setModalOpen(true);
-	};
-	const closeModal = () => setModalOpen(false);
 
 	useEffect(() => {
 		const fetchDocuments = async () => {
@@ -46,7 +33,6 @@ export const DocumentCreatorMainContent = ({ mainFormData }) => {
 					notAgreedDocuments: "Не согласован",
 					createdDocuments: "Ожидается согласование",
 				};
-
 				const status = statusMap[mainFormData.documentTypeState];
 				const response = await axios.get("http://localhost:8000/api/documents/", {
 					params: status ? { status } : {},
@@ -56,9 +42,12 @@ export const DocumentCreatorMainContent = ({ mainFormData }) => {
 				console.error("Ошибка загрузки документов:", error);
 			}
 		};
-
 		fetchDocuments();
 	}, [mainFormData.documentTypeState]);
+
+	useEffect(() => {
+		setCurrentPage(1);
+	}, [searchQuery, mainFormData.documentTypeState]);
 
 	const filteredDocuments = documents
 		.filter((doc) => {
@@ -79,24 +68,26 @@ export const DocumentCreatorMainContent = ({ mainFormData }) => {
 				case "createdDocuments":
 					return doc.status === "Ожидается согласование";
 				default:
-					return true; // "allDocuments"
+					return true;
 			}
 		});
 
-	const getTitle = () => {
-		switch (mainFormData.documentTypeState) {
-			case "toBeAgreedDocuments":
-				return "Документы на согласовании";
-			case "agreedDocuments":
-				return "Согласованные документы";
-			case "notAgreedDocuments":
-				return "Несогласованные документы";
-			case "createdDocuments":
-				return "Созданные документы";
-			default:
-				return "Все документы";
-		}
+	const totalPages = Math.ceil(filteredDocuments.length / itemsPerPage);
+
+	const paginatedDocuments = showAll
+		? filteredDocuments
+		: filteredDocuments.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
+	const indexOfLastItem = currentPage * itemsPerPage;
+	const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+	const currentDocuments = filteredDocuments.slice(indexOfFirstItem, indexOfLastItem);
+
+	const openModal = (documentId: string) => {
+		setSelectedDocumentId(documentId);
+		setModalOpen(true);
 	};
+	const closeModal = () => setModalOpen(false);
+
 	function formatDate(dateString) {
 		if (!dateString) return "—";
 		const date = new Date(dateString);
@@ -114,6 +105,21 @@ export const DocumentCreatorMainContent = ({ mainFormData }) => {
 			.then((data) => setCounterparties(data))
 			.catch((err) => console.error("Ошибка загрузки контрагентов", err));
 	}, []);
+
+	const getTitle = () => {
+		switch (mainFormData.documentTypeState) {
+			case "toBeAgreedDocuments":
+				return "Документы на согласовании";
+			case "agreedDocuments":
+				return "Согласованные документы";
+			case "notAgreedDocuments":
+				return "Несогласованные документы";
+			case "createdDocuments":
+				return "Созданные документы";
+			default:
+				return "Все документы";
+		}
+	};
 
 	const showApprovalButton = mainFormData.documentTypeState === "createdDocuments";
 
@@ -136,12 +142,12 @@ export const DocumentCreatorMainContent = ({ mainFormData }) => {
 							</tr>
 						</thead>
 						<tbody>
-							{filteredDocuments.length === 0 ? (
+							{paginatedDocuments.length === 0 ? (
 								<tr>
 									<td colSpan={4}>Документы не найдены или произошла ошибка загрузки.</td>
 								</tr>
 							) : (
-								filteredDocuments.map((doc) => {
+								paginatedDocuments.map((doc) => {
 									const counterparty = counterparties.find(
 										(c) => c.counterparty_id === doc.data.counterparty_id
 									);
@@ -150,18 +156,18 @@ export const DocumentCreatorMainContent = ({ mainFormData }) => {
 									return (
 										<tr
 											key={doc.document_id}
-											onClick={() => navigate(`/document/${doc.document_id}`)}>
+											onClick={() => {
+												if (doc.status !== "Ожидается согласование") {
+													navigate(`/document/${doc.document_id}`);
+												}
+											}}>
 											<td>
-												{console.log("doc:", doc)}
-												{console.log("Тип контрагента:", counterpartyType)}
-
 												{counterpartyType === "company"
 													? doc.data?.titleOfCompanyBuyer ?? "—"
 													: doc.data?.buyerFizFio ?? "—"}
 											</td>
 											<td>{doc.data?.contractNumber ?? "—"}</td>
 											<td>{formatDate(doc?.created_at)}</td>
-
 											{showApprovalButton && (
 												<td>
 													<button
@@ -181,6 +187,90 @@ export const DocumentCreatorMainContent = ({ mainFormData }) => {
 							)}
 						</tbody>
 					</Table>
+
+					{totalPages > 1 && !showAll && (
+						<div
+							style={{
+								marginTop: "16px",
+								display: "flex",
+								justifyContent: "center",
+								alignItems: "center",
+								gap: "8px",
+								flexWrap: "wrap",
+							}}>
+							<button
+								onClick={() => setCurrentPage(1)}
+								disabled={currentPage === 1}
+								style={{ padding: "6px 10px" }}>
+								«
+							</button>
+
+							<button
+								onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+								disabled={currentPage === 1}
+								style={{ padding: "6px 10px" }}>
+								←
+							</button>
+
+							{/* Номера страниц с "..." */}
+							{Array.from({ length: totalPages }, (_, index) => index + 1)
+								.filter((page) => {
+									if (page === 1 || page === totalPages) return true;
+									if (Math.abs(page - currentPage) <= 2) return true;
+									return false;
+								})
+								.map((pageNumber, idx, arr) => {
+									const prevPage = arr[idx - 1];
+									const needDots = prevPage && pageNumber - prevPage > 1;
+									return (
+										<React.Fragment key={pageNumber}>
+											{needDots && <span style={{ padding: "6px" }}>...</span>}
+											<button
+												onClick={() => setCurrentPage(pageNumber)}
+												style={{
+													padding: "6px 12px",
+													backgroundColor: pageNumber === currentPage ? "#458581" : "white",
+													color: pageNumber === currentPage ? "white" : "black",
+													border: "1px solid #ccc",
+													borderRadius: "4px",
+													cursor: "pointer",
+												}}>
+												{pageNumber}
+											</button>
+										</React.Fragment>
+									);
+								})}
+
+							<button
+								onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+								disabled={currentPage === totalPages}
+								style={{ padding: "6px 10px" }}>
+								→
+							</button>
+
+							<button
+								onClick={() => setCurrentPage(totalPages)}
+								disabled={currentPage === totalPages}
+								style={{ padding: "6px 10px" }}>
+								»
+							</button>
+						</div>
+					)}
+				</div>
+
+				<div style={{ marginTop: "10px", textAlign: "center" }}>
+					<button
+						onClick={() => setShowAll((prev) => !prev)}
+						style={{
+							padding: "8px 16px",
+							backgroundColor: showAll ? "#44786c" : "#508682",
+							color: "white",
+							border: "none",
+							borderRadius: "4px",
+							cursor: "pointer",
+						}}>
+						{showAll ? "Скрыть" : "Открыть все"}
+					</button>
 				</div>
 
 				{showApprovalButton && (

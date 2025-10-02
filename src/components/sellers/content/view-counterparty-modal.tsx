@@ -42,7 +42,7 @@ const ViewCounterpartyModal: React.FC<Props> = ({ onClose, type, data }) => {
     <div className="modal-backdrop-f">
       <div className="modal">
         <button className="modal__close" onClick={onClose}>×</button>
-        <h2 className="modal__title">Карточка контрагента</h2>
+        <h2 className="modal__title" style={{ fontSize: "32px" }}>Карточка контрагента</h2>
 
         <div className="modal__form">
           {fields.map(([key, label]) => (
@@ -54,7 +54,7 @@ const ViewCounterpartyModal: React.FC<Props> = ({ onClose, type, data }) => {
         </div>
 
         <div className="modal__buttons">
-          <button className="btn btn--close" onClick={onClose}>
+          <button className="btn btn--close" onClick={onClose} style={{ marginRight: "10px" , fontSize: "20px", fontWeight: "bold"}}>
             Закрыть
           </button>
         </div>

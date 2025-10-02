@@ -11,10 +11,10 @@
 		max-height: 100vh;
 
 		padding: 14px 20px;
-		padding-bottom: 60px;
+		// padding-bottom: 60px;
 		background-color: #ffffff;
 		font-size: 14px;
-		box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+		// box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
 		color: #1d2d2c;
 		scrollbar-width: none;
 		.span {
@@ -331,30 +331,35 @@
 			// 	text-indent: 0.25in;
 			// 	display: block;
 			// }
-			
+
 			// .obligation {
 			// 	text-indent: 0.5in;
 			// 	display: block;
 			// 	height: 20px;
 			// }
-			// table {
-			// 	border-collapse: collapse;
-			// 	border: 2px solid black;
-			// 	width: 100%;
-			// }
-
-			.content-container-table {
-				display: flex;
-				flex-direction: column;
+			table.gg {
+				border-collapse: collapse; /* Это объединяет границы в одну сплошную */
 				width: 100%;
 				margin-bottom: 20px;
-			}
+				border: 1px solid black;
 
-			// th,
-			// td {
-			// 	border: 2px solid black !important;
-			// 	text-align: center;
-			// }
+				th,
+				td {
+					border: 1px solid black;
+					text-align: center;
+				}
+
+				tbody {
+					/* border здесь не нужен, он может вызывать лишние границы */
+				}
+
+				.content-container-table {
+					display: flex;
+					flex-direction: column;
+					width: 100%;
+					margin-bottom: 20px;
+				}
+			}
 
 			h2 {
 				height: 20px;

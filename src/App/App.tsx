@@ -1,5 +1,4 @@
 import * as React from "react";
-
 import "./App.scss";
 import Main from "../components/main/Main";
 import { BrowserRouter as Router, Routes, useNavigate } from "react-router-dom";
@@ -8,9 +7,7 @@ import { PrivatePersonalRoute } from "./PrivatePersonalRoutes";
 import { Route } from "react-router-dom";
 import { IUser } from "../components/user";
 import Auth from "../components/SellerArea/index/Auth";
-import Register from "../components/SellerArea/index/Register";
 import { AuthGuard } from "./AuthGuard";
-import { DocumentCreator } from "../components/document-creator";
 import RegisterCounterparty from "../components/Auth/RegisterCounterparty";
 import RegisterUser from "../components/Auth/RegisterUser";
 

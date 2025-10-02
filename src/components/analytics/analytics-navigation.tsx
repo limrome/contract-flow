@@ -1,7 +1,7 @@
 // import * as React from "react";
 // import { useNavigate } from "react-router-dom";
 
-// export const DocumentCreatorNavigation = () => {
+// export const AnalyticsNavigation = () => {
 // 	const navigate = useNavigate();
 
 // 	return (
@@ -17,7 +17,7 @@
 // 			</div>
 // 			<div
 // 				className="navigation__header"
-// 				onClick={() => navigate("/analytics", { replace: false })}>
+// 				onClick={() => navigate("/analitics", { replace: false })}>
 // 				<button className="icon-btn-analytics" />
 // 				<span className="span">Аналитика</span>
 // 			</div>
@@ -28,7 +28,7 @@
 import * as React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
-export const DocumentCreatorNavigation = () => {
+export const AnalyticsNavigation = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
 

@@ -1,24 +1,23 @@
-
 .app-header {
 	position: fixed;
 	top: 0;
 	left: 0;
 	width: 100%;
-	height:50px;
+	height: 50px;
 	background-color: #ffffff;
 	border-bottom: 1px solid #ccc;
 	z-index: 1000;
 	display: flex;
 	align-items: center;
 	padding: 0 20px;
-	color:#264054;
-	font-family: 'Times New Roman', Times, serif;
+	color: #264054;
+	font-family: "Times New Roman", Times, serif;
 }
-header{
-	font-family: 'Times New Roman', Times, serif;
+header {
+	font-family: "Times New Roman", Times, serif;
 }
-div{
-	font-family: 'Times New Roman', Times, serif;
+div {
+	font-family: "Times New Roman", Times, serif;
 }
 
 .document-creator-container-main {
@@ -27,21 +26,26 @@ div{
 	overflow-y: scroll;
 	scrollbar-width: none;
 
+
 	h2 {
 		color: #264054;
 	}
 
 	.navigation {
-		width: 8%;
+		width: 10%;
 		height: 100%;
 		position: absolute;
 		top: 0;
-		font-size: 12px;
+		font-size: 18px;
 		background-color: #fdfdfd;
 		color: #263454;
 		font-weight: 1000;
 		cursor: pointer;
-		padding-top: 50px; 
+		padding-top: 50px;
+		.navigation__header.active {
+			color: #000000; /* или любой цвет подсветки */
+			font-weight: bold;
+		}
 
 		.span {
 			margin-bottom: 10px;
@@ -102,11 +106,11 @@ div{
 	.sidebar {
 		width: 14%;
 		height: 100%;
-		background-color:#c8d3d1;
-		padding-top: 50px; 
+		background-color: #c8d3d1;
+		padding-top: 50px;
 
 		position: absolute;
-		margin-left: 8%;
+		margin-left: 9%;
 		top: 0;
 		font-size: 12px;
 		button {
@@ -119,7 +123,7 @@ div{
 			margin-left: 30px;
 			font-family: "Times New Roman", Times, serif;
 			font-weight: 600;
-			font-size: 16px;
+			font-size: 18px;
 			color: #264054;
 			cursor: pointer;
 		}
@@ -156,6 +160,7 @@ div{
 			font-size: 12px;
 		}
 	}
+	
 
 	.content {
 		margin-left: 22%;
@@ -165,10 +170,11 @@ div{
 		height: 100%;
 		min-height: 100vh;
 		font-size: 12px;
-		h2{
-			font-size: 20px;
-			font-family:'Times New Roman', Times, serif;
+		h2 {
+			font-size: 28px;
+			font-family: "Times New Roman", Times, serif;
 		}
+		
 		.icon-btn {
 			background: none;
 			border: none;
@@ -177,6 +183,7 @@ div{
 			margin-right: 6px;
 			transition: transform 0.2s;
 			color: #476277;
+			font-size: 18px;
 
 			img {
 				display: inline-block;
@@ -203,7 +210,6 @@ div{
 			padding-bottom: 0.75rem;
 			margin-bottom: 1rem;
 		}
-		
 
 		table {
 			width: 100%;
@@ -223,9 +229,9 @@ div{
 
 				td {
 					padding: 1rem 0.75rem;
-					font-size: 12px;
+					font-size: 16px;
 					color: #374151;
-					font-family: 'Times New Roman', Times, serif;
+					font-family: "Times New Roman", Times, serif;
 				}
 			}
 		}
@@ -236,7 +242,7 @@ div{
 			padding: 0 1rem;
 			border: 1px solid #d1d5db;
 			border-radius: 10px;
-			font-size: 12px;
+			font-size: 16px;
 			background: #ffffff;
 			color: #111827;
 			transition: border 0.2s, box-shadow 0.2s;
@@ -257,7 +263,13 @@ div{
 			margin-inline: 1.5rem;
 		}
 	}
-	&h2, button, input, label, .profile-title, span {
-		font-family:'Times New Roman', Times, serif;
+	&h2,
+	button,
+	input,
+	label,
+	.profile-title,
+	span {
+		font-family: "Times New Roman", Times, serif;
+		font-size: 18px;
 	}
 }

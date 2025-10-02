@@ -20,16 +20,7 @@ div {
 	font-family: "Times New Roman", Times, serif;
 }
 
-.seller-container-main {
-	// display: flex;
-	// height: 100%;
-
-	// // overflow-y: scroll;
-	// h2 {
-	// 	color: #264054;
-	// 	font-family: "Times New Roman", Times, serif;
-	// }
-
+.analytics-container {
 	display: flex;
 	height: 100%;
 	overflow-y: scroll;
@@ -37,21 +28,23 @@ div {
 
 	h2 {
 		color: #264054;
-		font-family: "Times New Roman", Times, serif;
 	}
 
-	.navigation-seller {
+	.navigation {
 		width: 10%;
 		height: 100%;
-		position: fixed;
-		font-size: 12px;
-		background-color: #fdfdfd;
-		color: #264054;
+		position: absolute;
+		top: 0;
+		font-size: 18px;
+		background-color: #c8d3d1;
+		color: #263454;
 		font-weight: 1000;
 		cursor: pointer;
-		min-height: 100%;
-		left: 0;
-		font-size: 18px;
+		padding-top: 50px;
+		.navigation__header.active {
+			color: #000000; /* или любой цвет подсветки */
+			font-weight: bold;
+		}
 
 		.span {
 			margin-bottom: 10px;
@@ -62,32 +55,46 @@ div {
 			align-items: center;
 			margin-left: 5px;
 		}
-		.navigation__header.active {
-			color: #000000; /* или любой цвет подсветки */
-			font-weight: bold;
-		}
+
 		.icon-btn {
 			background: url("/public/images/icons/icon.png") no-repeat center / contain;
 			border: none;
 			display: flex;
 			justify-content: center;
 			align-items: center;
+			padding: 10px;
 			height: 25px;
 			width: 30px;
 			cursor: pointer;
-			margin-top: 10px;
+			margin-top: 15px;
 			margin-bottom: 15px;
 			background-color: transparent;
+			mix-blend-mode: multiply;
 			font-weight: 1000;
 		}
-		.icon-btn-seller-acc {
-			background: url("/public/images/icons/icon-acc.png") no-repeat center / contain;
+		.icon-btn-seller {
+			background: url("/public/images/icons/icon-seller.png") no-repeat center / contain;
 			border: none;
 			display: flex;
 			justify-content: center;
 			align-items: center;
 			padding: 10px;
-			height: 20px;
+			height: 30px;
+			width: 30px;
+			cursor: pointer;
+			margin-bottom: 15px;
+			color: #264054;
+			font-weight: 1000;
+		}
+
+		.icon-btn-analytics {
+			background: url("/public/images/icons/icon-analytics.png") no-repeat center / contain;
+			border: none;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			padding: 10px;
+			height: 25px;
 			width: 30px;
 			cursor: pointer;
 			margin-bottom: 15px;
@@ -95,103 +102,33 @@ div {
 			font-weight: 1000;
 		}
 	}
-	.sidebar-seller {
-		width: 14%;
-		height: 100%;
-		background-color: #c8d3d1;
-		// padding-top: 50px;
-		span {
-			font-size: 18px;
-		}
-		position: fixed;
+
+	.content-analytic {
 		margin-left: 10%;
-		// top: 0;
-		font-size: 18px;
-		button {
-			background: none;
-			border: none;
-		}
-
-		.dropdown-button {
-			display: flex;
-			margin-top: 20px;
-			margin-bottom: 20px;
-			margin-left: 30px;
-			font-family: "Times New Roman", Times, serif;
-			font-weight: 600;
-			font-size: 15px;
-			color: #264054;
-			cursor: pointer;
-
-			&.active {
-				color: rgb(0, 0, 0);
-			}
-		}
-		.dropdown-button2 {
-			display: flex;
-			margin-top: 50px;
-			margin-bottom: 20px;
-			font-family: "Times New Roman", Times, serif;
-			font-weight: 500;
-			font-size: 12px;
-			color: #264054;
-			cursor: pointer;
-		}
-
-		.label {
-			display: flex;
-			flex-direction: column;
-			gap: 10px;
-			font-size: 12px;
-		}
-	}
-
-	.content-seller {
-		margin-left: 24%;
 		padding: 2rem;
-		width: 78%;
+		padding-left: 4rem;
+		padding-right: 6rem;
+		width: 90%;
 		background-color: #f8f9fb;
 		height: 100%;
 		min-height: 100vh;
-		font-size: 14px;
+		font-size: 15px;
 		h2 {
-			font-size: 28px;
+			font-size: 22px;
 			font-family: "Times New Roman", Times, serif;
-		}
-		.icon-btn {
-			background: none;
-			border: none;
-			cursor: pointer;
-			padding: 4px;
-			margin-right: 6px;
-			transition: transform 0.2s;
-			color: #3a5b5c;
-
-			img {
-				display: inline-block;
-				vertical-align: middle;
-			}
-
-			&:hover {
-				transform: scale(1.1);
-			}
-		}
-		.content-container-table-main {
-			background: #ffffff;
-			padding: 2rem;
-			border-radius: 16px;
-			box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
-			margin-top: 2rem;
+			margin-bottom: 16px;
+			text-align: center;
+			align-items: center;
+			justify-content: center;
 		}
 
 		.table-header {
 			color: #64748b;
-			font-size: 14px;
+			font-size: 12px;
 			font-weight: 600;
 			border-bottom: 1px solid #e2e8f0;
 			padding-bottom: 0.75rem;
 			margin-bottom: 1rem;
-			font-family: "Times New Roman", Times, serif;
 		}
 
 		table {
@@ -212,7 +149,7 @@ div {
 
 				td {
 					padding: 1rem 0.75rem;
-					font-size: 16px;
+					font-size: 12px;
 					color: #374151;
 					font-family: "Times New Roman", Times, serif;
 				}
@@ -220,21 +157,19 @@ div {
 		}
 
 		input {
-			width: 100%;
-			margin-top: 2rem;
+			width: 25%;
 			height: 50px;
 			padding: 0 1rem;
 			border: 1px solid #d1d5db;
 			border-radius: 10px;
-			font-size: 14px;
+			font-size: 16px;
 			background: #ffffff;
-			color: #154646;
+			color: #111827;
 			transition: border 0.2s, box-shadow 0.2s;
-			font-family: "Times New Roman", Times, serif;
 
 			&:focus {
-				border-color: #578685;
-				box-shadow: 0 0 0 3px rgba(96, 194, 198, 0.414);
+				border-color: #0e6357;
+				box-shadow: 0 0 0 3px rgba(49, 111, 112, 0.15);
 				outline: none;
 			}
 
